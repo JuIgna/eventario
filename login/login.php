@@ -4,6 +4,7 @@ session_start();
 
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>Iniciar sesión - Eventario</title>
@@ -24,7 +25,7 @@ session_start();
   <main>
     <section>
       <form form action="login.php" method="POST">
-      <h2 class="title-eventos">Iniciar sesión</h2>
+        <h2 class="title-eventos">Iniciar sesión</h2>
         <div class="form-group">
           <label for="email">Email:</label>
           <input type="email" id="email" name="email" required>
@@ -34,14 +35,19 @@ session_start();
           <input type="password" id="password" name="password" required>
         </div>
         <div class="form-group">
+          <label for="admin">Soy administrador:</label>
+          <input type="checkbox" id="admin" name="admin">
+        </div>
+        <div class="form-group">
           <button id="login-submit-button" type="submit">Iniciar sesión </button>
           <a href="registro.php" id="register-submit-button">Registrarse</a>
         </div>
       </form>
     </section>
   </main>
-  
+
 </body>
+
 </html>
 
 <?php
@@ -64,8 +70,16 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
   $email = $_POST['email'];
   $contrasena = $_POST['password'];
 
-  // Consulta Login
-  $sql = "SELECT * FROM usuarios WHERE email = ? AND contrasena = ?";
+  // Verificar si el usuario marcó la casilla "Soy administrador"
+  $esAdmin = isset($_POST['admin']) ? 1 : 0;
+
+  if ($esAdmin) {
+    // Si es administrador, buscar en la tabla "Organizador"
+    $sql = "SELECT * FROM organizador WHERE correo = ? AND contrasena = ?";
+  } else {
+    // Si no es administrador, buscar en la tabla "Usuarios"
+    $sql = "SELECT * FROM usuarios WHERE email = ? AND contrasena = ?";
+  }
 
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("ss", $email, $contrasena);
@@ -81,7 +95,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     // Guardar el nombre de usuario y el ID de usuario en la sesión 
     $_SESSION['username'] = $row['nombre'];
     $_SESSION['IDusuario'] = $row['IDusuario'];
-    $_SESSION['esAdmin'] = $row['esAdmin'];
+    $_SESSION['esAdmin'] = $esAdmin; // Establecer la variable de sesión "esAdmin"
 
     // Redirigir al usuario a la página de inicio o realizar otras acciones necesarias
     header('Location: ../ListadoDeEventos/listaEventos.php');
