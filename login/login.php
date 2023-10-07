@@ -98,8 +98,14 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     $_SESSION['esAdmin'] = $esAdmin; // Establecer la variable de sesión "esAdmin"
 
     // Redirigir al usuario a la página de inicio o realizar otras acciones necesarias
-    header('Location: ../ListadoDeEventos/listaEventos.php');
-    exit(); // Asegurar que el script se detenga después de la redirección
+    if ($esAdmin) {
+      // Si es administrador, redirige a panel.php
+      header('Location: ../PanelAdministrador/panel.php');
+  } else {
+      // Si no es administrador, redirige a listaEventos.php
+      header('Location: ../ListadoDeEventos/listaEventos.php');
+  }
+  exit(); // Asegurar que el script se detenga después de la redirección
   } else {
     // Credenciales incorrectas
     $_SESSION['message'] = "Email o contraseña incorrectos";
