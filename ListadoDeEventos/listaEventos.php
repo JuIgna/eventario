@@ -11,14 +11,14 @@ session_start();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Listado de Eventos</title>
   <link rel="stylesheet" type="text/css" href="css/styles.css">
-  <script src="scriptEventos.js"></script> 
+  <script src="scriptEventos.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.min.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.min.js"></script>
 </head>
 
 <body>
   <header>
-    <h1><a href = "../index.html" class="logo-link"> Eventario </a> </h1>
+    <h1><a href="../index.html" class="logo-link"> Eventario </a> </h1>
 
     <?php
     // Iniciar la sesión en la página
@@ -27,21 +27,21 @@ session_start();
 
 
     //session_start();
-  
+
 
     // Configuración de la conexión a la base de datos
-      $host = "localhost"; // Cambiar si es necesario
-      $username = "eventario_juan"; // Cambiar por tu nombre de usuario de la base de datos
-      $password = "juan$2023"; // Cambiar por tu contraseña de la base de datos
-      $database = "eventario_db"; // Cambiar por el nombre de tu base de datos
-    
-      // Crear la conexión a la base de datos
-      $connection = new mysqli($host, $username, $password, $database);
-    
-       // Verificar si hay errores en la conexión
-      if ($connection->connect_error) {
+    $host = "localhost"; // Cambiar si es necesario
+    $username = "eventario_juan"; // Cambiar por tu nombre de usuario de la base de datos
+    $password = "juan$2023"; // Cambiar por tu contraseña de la base de datos
+    $database = "eventario_db"; // Cambiar por el nombre de tu base de datos
+
+    // Crear la conexión a la base de datos
+    $connection = new mysqli($host, $username, $password, $database);
+
+    // Verificar si hay errores en la conexión
+    if ($connection->connect_error) {
       die("Error en la conexión a la base de datos: " . $connection->connect_error);
-      }
+    }
 
     // Verificar si el usuario ha iniciado sesión
     if (isset($_SESSION['username'])) {
@@ -49,7 +49,7 @@ session_start();
       $username = $_SESSION['username'];
       $valorEsAdmin = $_SESSION['esAdmin'];
 
-     
+
       echo "<div class='button-container'>";
       echo "<a href='misEventos.php'>Mis eventos</a>";
       echo "<a href='cerrarSesion.php'>Cerrar sesión</a>";
@@ -59,7 +59,7 @@ session_start();
       // El usuario no ha iniciado sesión, mostrar el botón de inicio de sesión
       echo "<button id='login-button' onclick='redirectToLogin()'>Iniciar sesión </button>";
     }
-    
+
     ?>
   </header>
 
@@ -71,7 +71,7 @@ session_start();
 
       <!-- Codigo para agregar eventos -->
       <?php
-if ($valorEsAdmin !== NULL) {
+      if ($valorEsAdmin !== NULL) {
         echo "<section>";
         echo "<button id='add-event-button' >Agregar Evento</button>";
         echo "</section>";
@@ -102,7 +102,7 @@ if ($valorEsAdmin !== NULL) {
 
         echo "<label for='limite-inscriptos'>Limite Inscripciones:</label>";
         echo "<input type='number' id='limite-inscriptos' name='limite-inscriptos' max=200 required>";
-        
+
         echo "<label for='imagen-evento'>Imagen:</label>";
         echo "<input type='file' id='imagen-evento' name='imagen-evento' accept='image/*' required>";
 
@@ -120,7 +120,7 @@ if ($valorEsAdmin !== NULL) {
         echo "document.getElementById('add-event-modal').style.display = 'none';";
         echo "});";
         echo "</script>";
-}
+      }
 
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Obtener los valores del formulario
@@ -132,9 +132,9 @@ if ($valorEsAdmin !== NULL) {
         $descripcionEvento = $_POST["descripcion-evento"];
         $horaEvento = $_POST["hora-evento"];
         $horaEventoFin = $_POST["hora-evento-fin"];
-        $limiteInscripciones = $_POST ["limite-inscriptos"];
+        $limiteInscripciones = $_POST["limite-inscriptos"];
 
-        
+
         // Verificar que hora final sea mayor que la hora. Caso contrario no se agrega el evento
         if (strtotime($horaEventoFin) <= strtotime($horaEvento)) {
           echo "<script>
@@ -148,17 +148,17 @@ if ($valorEsAdmin !== NULL) {
              });
           </script>";
           exit;
-      }
-  
-      // Mover la imagen cargada al directorio deseado
-      $destination = "images/" . $imagenEvento;
-      move_uploaded_file($imagenEventoTmp, $destination);
-  
-      // Insertar el evento en la base de datos
-      $query = "INSERT INTO eventos (evento, fecha, lugar, imagen, descripcion, hora, hora_fin, limite_inscritos) 
+        }
+
+        // Mover la imagen cargada al directorio deseado
+        $destination = "images/" . $imagenEvento;
+        move_uploaded_file($imagenEventoTmp, $destination);
+
+        // Insertar el evento en la base de datos
+        $query = "INSERT INTO eventos (evento, fecha, lugar, imagen, descripcion, hora, hora_fin, limite_inscritos) 
                 VALUES ('$nombreEvento', '$fechaEvento', '$lugarEvento', '$destination', '$descripcionEvento', '$horaEvento', '$horaEventoFin', '$limiteInscripciones','$horaEventoFin')";
-  
-  
+
+
 
         // Mover la imagen cargada al directorio deseado
         $destination = "images/" . $imagenEvento;
@@ -175,13 +175,13 @@ if ($valorEsAdmin !== NULL) {
         }
       }
 
-                      
+
       ?>
 
-    <!-- Mostrar listado de eventos --> 
+      <!-- Mostrar listado de eventos -->
       <ul id="event-list">
-        <?php 
-   
+        <?php
+
         if (!isset($_SESSION['username'])) {
           echo "<p class='login-message'>Inicia sesión para registrarte a los eventos.</p>";
         }
@@ -197,7 +197,7 @@ if ($valorEsAdmin !== NULL) {
         }
 
         // Consulta para obtener los eventos de la base de datos
-        $query = "SELECT * FROM eventos ORDER BY fecha ASC" ;
+        $query = "SELECT * FROM eventos ORDER BY fecha ASC";
         $result = $connection->query($query);
 
         // Comprobar si hay eventos
@@ -209,8 +209,8 @@ if ($valorEsAdmin !== NULL) {
             $lugar = $row["lugar"];
             $imagen = $row["imagen"];
             $IDevento = $row['IDeventos'];
-            $descripcion = $row ['descripcion'];
-            $hora = $row ['hora'];
+            $descripcion = $row['descripcion'];
+            $hora = $row['hora'];
             $horaEventoFin = $row['hora_fin'];
             $cant_inscripciones = $row['limite_inscritos'];
 
@@ -223,31 +223,20 @@ if ($valorEsAdmin !== NULL) {
 
             $cantidadRestante = $cant_inscripciones - $cantidadInscripciones;
 
-
-            // Calcular los días restantes para el evento
-            $dias_restantes = ceil((strtotime($fecha) - time()) / (60 * 60 * 24));
-
-            // Verificar si el evento ya ha terminado
-            $evento_terminado = strtotime($fecha) < time();
-
-
             // Calcular los días restantes para el evento
             $fecha_actual = new DateTime();
             $fecha_evento = new DateTime($fecha);
-            // $diferencia = date_diff($fecha_actual, $fecha_evento);
-            // $dias_restantes = $diferencia->days;
-            // $horas_restantes = $diferencia->format('%h');
-
-
             $intervalo = $fecha_actual->diff($fecha_evento);
             $dias_restantes = $intervalo->format('%a');
             $horas_restantes = $intervalo->format('%h');
 
+            // Verificar si el evento ya ha terminado
+            $evento_terminado = strtotime($fecha) < time();
 
             // Verificar si el usuario está inscrito en el evento actual
             $inscrito = false; // Variable para almacenar el estado de inscripción
             if (isset($_SESSION['username']) && isset($_SESSION['IDusuario'])) {
-            $userID = $_SESSION['IDusuario'];
+              $userID = $_SESSION['IDusuario'];
 
               // Consultar la tabla de inscripciones para verificar la inscripción del usuario
               $inscripcionQuery = "SELECT * FROM inscripciones WHERE IDusuario = '$userID' AND IDeventos = '$IDevento'";
@@ -265,52 +254,63 @@ if ($valorEsAdmin !== NULL) {
                   <img class="event-image__img" src="<?php echo $imagen; ?>" alt="Imagen del evento">
                 </div>
                 <div class="event-details">
-                  <h4><?php echo $evento; ?></h4>
-                  <p> <?php echo $descripcion; ?> </p>        
-                  <p>Fecha: <?php echo $fecha; ?></p>
-                  <p>Lugar: <?php echo $lugar; ?></p>
-                  <p>Hora: <?php echo $hora . ' -- ' . $horaEventoFin; ?> </p>
-                  <p>Inscripciones: <?php echo $cantidadInscripciones . ' / ' . $cant_inscripciones; ?></p>
-                  
+                  <h4>
+                    <?php echo $evento; ?>
+                  </h4>
+                  <p>
+                    <?php echo $descripcion; ?>
+                  </p>
+                  <p>Fecha:
+                    <?php echo $fecha; ?>
+                  </p>
+                  <p>Lugar:
+                    <?php echo $lugar; ?>
+                  </p>
+                  <p>Hora:
+                    <?php echo $hora . ' -- ' . $horaEventoFin; ?>
+                  </p>
+                  <p>Inscripciones:
+                    <?php echo $cantidadInscripciones . ' / ' . $cant_inscripciones; ?>
+                  </p>
+
                   <?php if ($evento_terminado) { ?>
-              <p>El evento ha terminado</p>
-            <?php } else if ($dias_restantes > 0 || $horas_restantes > 0) { ?>
-              <p>
-                <?php
-                if ($dias_restantes > 0) {
-                  echo "Faltan $dias_restantes días";
-                  if ($horas_restantes > 0) {
-                    echo " y $horas_restantes horas";
-                  }
-                } else {
-                  echo "Faltan $horas_restantes horas";
-                }
-                ?>
-              </p>
-            <?php } else { ?>
-              <p>El evento está en curso</p>
-            <?php } ?>
+                    <p>El evento ha terminado</p>
+                  <?php } else if ($dias_restantes > 0 || $horas_restantes > 0) { ?>
+                      <p>
+                        <?php
+                        if ($dias_restantes > 0) {
+                          echo "Faltan $dias_restantes días";
+                          if ($horas_restantes > 0) {
+                            echo " y $horas_restantes horas";
+                          }
+                        } else {
+                          echo "Faltan $horas_restantes horas";
+                        }
+                        ?>
+                      </p>
+                  <?php } else { ?>
+                      <p>El evento está en curso</p>
+                  <?php } ?>
 
 
-                  <?php if ($inscrito) { ?>
-                        <form action="cancelarRegistro.php" method="POST">
-                            <input type="hidden" name="IDeventos" value="<?php echo $IDevento; ?>">
-                            <button type="submit" class="cancel-button">Cancelar Registro</button>
-                        </form>
-                    <?php } else if (isset($_SESSION['username'])) { ?>
-                        <?php if ($cantidadRestante > 0) { ?>
-                            <form action="inscribirEvento.php" method="POST">
-                                <input type="hidden" name="IDeventos" value="<?php echo $IDevento; ?>">
-                                <button type="submit" class="register-button">Registrarse</button>
-                            </form>
-                        <?php } else { ?>
-                            <p>El evento ha alcanzado el límite de inscripciones.</p>
-                        <?php }
-                    } ?>
+                  <?php if (!$evento_terminado && !$inscrito && isset($_SESSION['username']) && $cantidadRestante > 0) { ?>
+                    <form action="inscribirEvento.php" method="POST">
+                      <input type="hidden" name="IDeventos" value="<?php echo $IDevento; ?>">
+                      <button type="submit" class="register-button">Registrarse</button>
+                    </form>
+                  <?php } else if ($inscrito) { ?>
+                    <form action="cancelarRegistro.php" method="POST">
+                      <input type="hidden" name="IDeventos" value="<?php echo $IDevento; ?>">
+                      <button type="submit" class="cancel-button">Cancelar Registro</button>
+                    </form>
+                  <?php } else if (!$evento_terminado && isset($_SESSION['username']) && $cantidadRestante <= 0) { ?>
+                    <p>El evento ha alcanzado el límite de inscripciones.</p>
+                  <?php } ?>
+
                 </div>
               </div>
             </li>
-          <?php
+            <?php
           }
         } else {
           echo "No se encontraron eventos.";
@@ -324,10 +324,10 @@ if ($valorEsAdmin !== NULL) {
       </ul>
 
     </section>
-    
+
   </main>
 
-  
+
 </body>
 
 </html>
