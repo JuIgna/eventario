@@ -1,0 +1,118 @@
+/* Estilos generales */
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+html, body {
+	height: 100%; /* Establece el tamaño completo de la ventana del navegador */
+}
+
+header {
+	background-color: #34495E;
+	color: #FAD7A0;
+	padding: 20px;
+	text-align: center;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+h1 {
+	margin: 0;
+}
+
+main {
+	flex-grow: 1; /* Ocupa todo el espacio disponible */
+	padding: 0;
+	background-color: #FAD7A0;
+	background-image: linear-gradient(135deg, #FAD7A0 0%, #e09fa1 100%);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	display: flex;
+	justify-content: center;
+	min-height: 100vh; /* Establece una altura mínima del main para ocupar toda la pantalla */
+	margin: 0;
+}
+
+section {
+	margin-bottom: 20px;
+}
+
+/* Estilos del formulario de inicio de sesión */
+form {
+	margin-top: 100px;
+	border-radius: 10px;
+	padding: 40px;
+	max-width: 500px;
+	width: 100%;
+	border: 1px solid #ccc;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	margin-bottom: 30px;
+	background-color: #F5B7B1;
+}
+
+.form-group {
+	margin-bottom: 20px;
+}
+
+label {
+	display: block;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"] {
+	width: 100%;
+	padding: 10px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+}
+
+button[type="submit"],
+#register-submit-button {
+	background-color: #34495E;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover,
+#register-submit-button:hover {
+	background-color: #2C3E50;
+}
+
+#home-button {
+	background-color: #FAD7A0;
+	color: black;
+	border: none;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+
+.error-message {
+	color: black;
+	margin-top: 10px;
+  }
+
+/* .logo-link{
+	text-decoration: none;
+	color: #FAD7A0;
+
+} */

@@ -1,0 +1,48 @@
+**** Librerias
+
+lte admin 
+
+react
+
+argom
+
+librerias de gestion de usuario
+
+
+
+
+**** API: Google calendar probar
+
+boton inscribirse para iniciar sesion tambien
+
+
+
+**** funcionalidades: 
+* lado usuario:
+
+* Lado operador: ver informacion del evento, listado de inscriptos
+
+campo presente, marca de asistencia, costo del evento, publico/target
+
+1- Bugs
+2- API
+3- Funcionalidades
+4- Libreria / react
+
+
+
+tabla usuarios: 
+IDusuario, nombre, apellido, email, celular, esAdmin
+
+
+ALTER TABLE usuarios
+MODIFY COLUMN IDusuario INT AUTO_INCREMENT,
+MODIFY COLUMN nombre VARCHAR(255),
+MODIFY COLUMN apellido VARCHAR(255),
+MODIFY COLUMN email VARCHAR(255),
+MODIFY COLUMN celular VARCHAR(25),
+MODIFY COLUMN esAdmin varchar(1);
+
+
+
+

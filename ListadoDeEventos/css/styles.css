@@ -1,0 +1,300 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  header {
+    background-color: #34495E;
+    color: #FAD7A0;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  h1 {
+    margin: 0;
+  }
+  
+  main {
+    padding: 20px;
+    background-color: #FAD7A0;
+    background-image: linear-gradient(135deg, #FAD7A0 0%, #e09fa1 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 87.8vh;
+  }
+  
+  section {
+    margin-bottom: 20px;
+  }
+
+  
+  
+  /* Estilos del listado de eventos */
+  #event-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .event-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  .event-image {
+    margin-right: 20px;
+  }
+  
+  .event-details {
+    text-align: left;
+  }
+  
+  .event-details h4 {
+    margin-top: 0;
+  }
+  
+  li {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #F5B7B1;
+  }
+  
+  h3 {
+    margin: 0;
+  }
+  
+  p {
+    margin-top: 5px;
+  }
+  
+  /* Estilos del botón de inicio de sesión */
+  #login-button {
+    background-color: #FAD7A0;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .register-button {
+    background-color: #34495E;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 3px;
+    transition: background-color 0.5s ease, box-shadow 0.5s ease;
+    cursor: pointer;
+  }
+
+  
+  .registered {
+    background-color: limegreen;
+    box-shadow: 0 0 4px 0 rgba(0, 128, 0, 0.6), 0 0 8px 2px rgba(0, 128, 0, 0.4);
+  }
+
+  .title-eventos {
+    font-size: 28px;
+    color: #34495E;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    position: relative;
+  }
+  
+  .title-eventos::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background-color: #FAD7A0;
+  }
+
+  .title-proximos-eventos {
+    font-size: 24px;
+    color: #34495E;
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    position: relative;
+  }
+  
+  .title-proximos-eventos::before,
+  .title-proximos-eventos::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 2px;
+    background-color: #FAD7A0;
+  }
+  
+  .title-proximos-eventos::before {
+    margin-left: -40px;
+  }
+  
+  .title-proximos-eventos::after {
+    margin-left: 10px;
+  }
+
+  /* .cancel-button {
+    display: none;
+  } */
+
+  .cancel-button {
+    /* display: none; */
+    background-color: #E74C3C;
+    color: white;
+    width: 150px;
+    padding: 7px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+
+  /* Estilos para el botón "Agregar Evento" */
+
+#add-event-button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+/* Estilos para el formulario modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#add-event-form {
+  margin-top: 20px;
+}
+
+#add-event-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+#add-event-form input[type="text"],
+#add-event-form input[type="date"],
+#add-event-form input[type="file"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+#add-event-form button[type="submit"] {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+
+
+.event-image__img {
+  max-width: 300px;
+  max-height: 300px;
+} 
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+
+.button-container a {
+  margin-left: 10px;
+}
+
+
+  /* Estilos para el pop-up de error */
+  .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    display: none;
+  }
+
+  .login-message {
+    /* background-color: #FAD7A0; */
+    color: #34495E;
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+  }
+  
+  .logo-link {
+    text-decoration: none;
+    color: #FAD7A0;
+  }
+
+
+  
