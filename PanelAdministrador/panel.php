@@ -10,7 +10,7 @@ session_start();
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel Administracion</title>
-  <link rel="stylesheet" type="text/css" href="../ListadoDeEventos/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="css/estilosAdministrador.css">
   <script src="scriptEventos.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.min.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.min.js"></script>
@@ -115,7 +115,7 @@ session_start();
               icon: 'error',
               confirmButtonText: 'Aceptar'
               }).then(function() {
-                 window.location.href = 'listaEventos.php';
+                 window.location.href = 'panel.php';
              });
           </script>";
           exit;
@@ -138,7 +138,7 @@ session_start();
         // Insertar el evento en la base de datos
         $query = "INSERT INTO eventos (evento, fecha, lugar, imagen, descripcion, hora, limite_inscritos,hora_fin) VALUES ('$nombreEvento', '$fechaEvento', '$lugarEvento', '$destination','$descripcionEvento','$horaEvento', '$limiteInscripciones','$horaEventoFin')";
         if ($connection->query($query) === true) {
-          header("Location: listaEventos.php");
+          header("Location: panel.php");
           echo "Evento agregado correctamente.";
           exit;
         } else {
