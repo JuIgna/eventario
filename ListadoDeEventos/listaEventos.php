@@ -145,7 +145,7 @@ session_start();
             <li>
               <div class="event-item">
                 <div class="event-image">
-                  <img class="event-image__img" src="../PanelAdministrador/<?php echo $imagen; ?>" alt="Imagen del evento">
+                  <img class="event-image__img" src="../PanelOrganizador/<?php echo $imagen; ?>" alt="Imagen del evento">
                 </div>
                 <div class="event-details">
                   <h4>
