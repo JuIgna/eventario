@@ -138,10 +138,13 @@ session_start();
 
         if ($connection->query($query) === true) {
           $IDeventos = $connection->insert_id;
+
           $query = "INSERT INTO eventosorganizador (IDorganizador, IDeventos) VALUES ('$IDorganizador', '$IDeventos')";
 
-          header("Location: panel.php");
-          exit;
+          if ($connection->query($query) === true) {
+            header("Location: panel.php");
+            exit;
+          }
         } else {
           echo "Error al agregar el evento: " . $connection->error;
         }
