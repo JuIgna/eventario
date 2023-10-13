@@ -11,7 +11,7 @@ session_start();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel Administracion</title>
   <link rel="stylesheet" type="text/css" href="css/estilosAdministrador.css">
-  <script src="scriptEventos.js"></script>
+  <script src="scripts/panelAdmin.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.min.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.min.js"></script>
 </head>
@@ -52,7 +52,7 @@ session_start();
         echo "<span id='close-modal-button' class='close'>&times;</span>";
 
         echo "<h3>Agregar Evento</h3>";
-        echo "<form id='add-event-form' action='listaEventos.php' method='POST' enctype='multipart/form-data'>";
+        echo "<form id='add-event-form' action='panel.php' method='POST' enctype='multipart/form-data'>";
         echo "<label for='nombre-evento'>Nombre del Evento:</label>";
         echo "<input type='text' id='nombre-evento' name='nombre-evento' required>";
 
