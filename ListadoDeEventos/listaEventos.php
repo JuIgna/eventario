@@ -26,9 +26,6 @@ session_start();
     echo "<script>var valorEsAdmin = " . json_encode($valorEsAdmin) . ";</script>";
 
 
-    //session_start();
-
-
     // Configuración de la conexión a la base de datos
     $host = "localhost"; // Cambiar si es necesario
     $username = "eventario_juan"; // Cambiar por tu nombre de usuario de la base de datos
@@ -67,11 +64,7 @@ session_start();
     <h2 class="title-eventos">Listado de Eventos</h2>
     <section>
       <h3 class="title-proximos-eventos">Próximos eventos</h3>
-
-
-      <!-- Codigo para agregar eventos -->
       
-
       <!-- Mostrar listado de eventos -->
       <ul id="event-list">
         <?php
@@ -145,7 +138,7 @@ session_start();
             <li>
               <div class="event-item">
                 <div class="event-image">
-                  <img class="event-image__img" src="../PanelAdministrador/<?php echo $imagen; ?>" alt="Imagen del evento">
+                  <img class="event-image__img" src="../PanelOrganizador/<?php echo $imagen; ?>" alt="Imagen del evento">
                 </div>
                 <div class="event-details">
                   <h4>
