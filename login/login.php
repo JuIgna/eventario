@@ -97,6 +97,10 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     $_SESSION['IDusuario'] = $row['IDusuario'];
     $_SESSION['esAdmin'] = $esAdmin; // Establecer la variable de sesión "esAdmin"
 
+    $_SESSION['username'] = $row['nombre'];
+    $_SESSION['IDorganizador'] = $row['IDorganizador'];
+    
+
     // Redirigir al usuario a la página de inicio o realizar otras acciones necesarias
     if ($esAdmin) {
       // Si es administrador, redirige a panel.php
