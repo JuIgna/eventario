@@ -145,7 +145,7 @@ session_start();
             <li>
               <div class="event-item">
                 <div class="event-image">
-                  <img class="event-image__img" src="<?php echo $imagen; ?>" alt="Imagen del evento">
+                  <img class="event-image__img" src="../PanelAdministrador/<?php echo $imagen; ?>" alt="Imagen del evento">
                 </div>
                 <div class="event-details">
                   <h4>
@@ -187,7 +187,7 @@ session_start();
                   <?php } ?>
 
 
-                  <?php if (!$evento_terminado && !$inscrito && isset($_SESSION['username']) && $cantidadRestante > 0) { ?>
+                  <?php if (!$evento_terminado && !$inscrito && isset($_SESSION['username']) && $cantidadRestante > 0 && $valorEsAdmin == 0) { ?>
                     <form action="inscribirEvento.php" method="POST">
                       <input type="hidden" name="IDeventos" value="<?php echo $IDevento; ?>">
                       <button type="submit" class="register-button">Registrarse</button>
