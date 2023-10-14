@@ -9,32 +9,37 @@
   </head>
 
   <body>
-    <div class="top-images">
-      <img src="./assets/images/boxeo.jpg" alt="First slide" />
-      <img src="./assets/images/concierto.jpg" alt="Second slide" />
-      <img src="./assets/images/cumpleanos.jpg" alt="Third slide" />
-      <img src="./assets/images/fiesta.jpg" alt="Third slide" />
-    </div>
-    <div class="image-container">
-      <img src="./assets/images/duki.jpg" alt="First slide" />
-      <div class="container">
-        <h1>Bienvenido a Eventario</h1>
-        <div class="buttons">
-          <a href="ListadoDeEventos/listaEventos.php" class="button"
-            >Lista de Eventos</a
-          >
-          <a href="login/login.php" class="button">Iniciar Sesión</a>
-          <a href="PanelOrganizador/panel.php" class="button">Soy Organizador</a>
+    <div class="container">
+      <h1 class="title">Bienvenido a Eventario</h1>
+      <div class="central-buttons">
+        <a href="ListadoDeEventos/listaEventos.php" class="button">Lista de Eventos</a>
+        <a href="login/login.php" class="button">Iniciar Sesión</a>
+        <a href="PanelOrganizador/panel.php" class="button">Soy Organizador</a>
+      </div>
+      <div class="features">
+        <div class="feature">
+          <h2>Busca eventos</h2>
+          <p>Encuentra los eventos que te interesan.</p>
+        </div>
+        <div class="feature">
+          <h2>Inscríbete a eventos</h2>
+          <p>Regístrate en los eventos que desees asistir.</p>
+        </div>
+        <div class="feature">
+          <h2>Gestiona eventos</h2>
+          <p>Organiza y gestiona tus propios eventos.</p>
         </div>
       </div>
-      <img src="./assets/images/futbol.jpg" alt="First slide" />
     </div>
 
-    <div class="top-images">
-      <img src="./assets/images/weeknd.webp" alt="First slide" />
-      <img src="./assets/images/lamona.jpg" alt="Second slide" />
-      <img src="./assets/images/redhot.jpg" alt="Third slide" />
-      <img src="./assets/images/babasonicos.jpg" alt="Third slide" />
-    </div>
+
+    <script>
+      // JavaScript para agregar la clase "show" al título
+      window.addEventListener("load", function () {
+        const title = document.querySelector(".title");
+        title.classList.add("show");
+      });
+    </script>
+
   </body>
 </html>
