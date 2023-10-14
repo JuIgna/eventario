@@ -35,6 +35,11 @@ session_start();
       die("Error en la conexión a la base de datos: " . $connection->connect_error);
     }
     $IDorganizador = $_SESSION['IDorganizador']; // Obten el ID del organizador desde la sesión
+
+    echo "<div class='button-container'>";
+    echo "<a href='cerrarSesion.php'>Cerrar sesión</a>";
+    echo "</div>";
+    
     ?>
   </header>
 
@@ -42,10 +47,6 @@ session_start();
     <?php
     if (isset($_SESSION['esAdmin']) && $_SESSION['esAdmin'] == 1) {
       // Si el usuario es un organizador, mostrar el botón para agregar eventos
-      echo "<div class='button-container'>";
-      echo "<a href='cerrarSesion.php'>Cerrar sesión</a>";
-      echo "</div>";
-
       echo "<section>";
       echo "<button id='add-event-button' >Agregar Evento</button>";
       echo "</section>";
@@ -138,10 +139,13 @@ session_start();
 
         if ($connection->query($query) === true) {
           $IDeventos = $connection->insert_id;
+
           $query = "INSERT INTO eventosorganizador (IDorganizador, IDeventos) VALUES ('$IDorganizador', '$IDeventos')";
 
-          header("Location: panel.php");
-          exit;
+          if ($connection->query($query) === true) {
+            header("Location: panel.php");
+            exit;
+          }
         } else {
           echo "Error al agregar el evento: " . $connection->error;
         }
