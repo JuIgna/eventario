@@ -306,3 +306,14 @@ body {
     color: #FAD7A0;
   }
 
+  .edit-event-button {
+  padding: 10px 20px;
+  margin: 5px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 10px;
+
+}
+

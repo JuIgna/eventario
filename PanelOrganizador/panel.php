@@ -153,6 +153,21 @@ session_start();
       
           // Agrega el elemento de lista al contenedor de lista (ul)
           eventList.appendChild(eventoItem);
+          
+          const editarEventoButton = document.createElement('button');
+          editarEventoButton.innerText = 'Editar Evento';
+          editarEventoButton.classList.add('edit-event-button');
+          editarEventoButton.addEventListener('click', () => {
+              // Agrega aquí la lógica para editar el evento cuando se haga clic en el botón
+              // Puedes redirigir a una página de edición o mostrar un formulario de edición en un modal.
+          });
+          // Agrega el botón 'Editar evento' al elemento de detalles
+          eventoDetails.appendChild(editarEventoButton);
+      
+          // Agregar el elemento de lista (li) a la lista (ul)
+          eventList.appendChild(eventoItem);
+
+
         });
       
         // Agrega la lista completa al contenedor de eventos
@@ -161,7 +176,7 @@ session_start();
       </script>";
       
       echo "<div id='eventos-container' class='eventos-container'></div>";
-      
+       
 
       // Codigo para agregar eventos
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
