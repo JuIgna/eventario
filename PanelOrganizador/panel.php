@@ -11,7 +11,7 @@ session_start();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel Administracion</title>
   <link rel="stylesheet" type="text/css" href="css/estilosOrganizador.css">
-  <script src="scripts/panelAdmin.js"></script>
+  <script src="scripts/panelOrganizador.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.min.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.min.js"></script>
 </head>
@@ -49,6 +49,7 @@ session_start();
       // Si el usuario es un organizador, mostrar el botón para agregar eventos
       echo "<section>";
       echo "<button id='add-event-button' >Agregar Evento</button>";
+      echo "<button id='view-events-button' >Ver mis eventos</button>";
       echo "</section>";
 
       echo "<div id='add-event-modal' class='modal'>";
@@ -94,9 +95,75 @@ session_start();
       echo "document.getElementById('close-modal-button').addEventListener('click', function() {";
       echo "document.getElementById('add-event-modal').style.display = 'none';";
       echo "});";
+
+      
       echo "</script>";
 
+      echo "<script>
+      document.getElementById('view-events-button').addEventListener('click', function() {
+        
+        // Realiza una petición AJAX para obtener los eventos del organizador
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'obtenerEventos.php', true);
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            // Manejar la respuesta y mostrar los eventos en la página
+            const events = JSON.parse(xhr.responseText);
+            mostrarEventos(events);
+          }
+        };
+        xhr.send();
+      });
+      
+      function mostrarEventos(eventos) {
+        const eventosContainer = document.getElementById('eventos-container');
+        eventosContainer.innerHTML = ''; // Limpiar el contenedor
+      
+        // Crea una lista no ordenada (ul)
+        const eventList = document.createElement('ul');
+        eventList.id = 'event-list';
+      
+        eventos.forEach(evento => {
+          // Para cada evento, crea un elemento de lista (li)
+          const eventoItem = document.createElement('li');
+          eventoItem.classList.add('event-item'); // Agregar la clase 'event-item'
+      
+          // Crea una imagen (img) para el evento
+          const eventoImage = document.createElement('img');
+          eventoImage.classList.add('event-image'); // Agregar la clase 'event-image'
+          eventoImage.src = evento.imagen;
+          eventoImage.alt = evento.evento;
+          eventoImage.style.maxWidth = '250x';
+          eventoImage.style.maxHeight = '250px'
+      
+          // Crea un contenedor de detalles para el evento
+          const eventoDetails = document.createElement('div');
+          eventoDetails.classList.add('event-details'); // Agregar la clase 'event-details'
+          eventoDetails.innerHTML = '<h4>' + evento.evento + '</h4>' +
+            '<p>Fecha: ' + evento.fecha + '</p>' +
+            '<p>Lugar: ' + evento.lugar + '</p>' +
+            '<p>Descripción: ' + evento.descripcion + '</p>' +
+            '<p>Hora de inicio: ' + evento.hora + '</p>' +
+            '<p>Hora de finalización: ' + evento.hora_fin + '</p>' +
+            '<p>Límite de inscripciones: ' + evento.limite_inscritos + '</p>';
+      
+          // Agrega la imagen y los detalles al elemento de lista
+          eventoItem.appendChild(eventoImage);
+          eventoItem.appendChild(eventoDetails);
+      
+          // Agrega el elemento de lista al contenedor de lista (ul)
+          eventList.appendChild(eventoItem);
+        });
+      
+        // Agrega la lista completa al contenedor de eventos
+        eventosContainer.appendChild(eventList);
+      }
+      </script>";
+      
+      echo "<div id='eventos-container' class='eventos-container'></div>";
+      
 
+      // Codigo para agregar eventos
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Obtener los valores del formulario
         $nombreEvento = $_POST["nombre-evento"];
@@ -155,7 +222,6 @@ session_start();
       // header ("Location: ../login/login.php");
     }
     ?>
-
   </main>
 
 </body>
