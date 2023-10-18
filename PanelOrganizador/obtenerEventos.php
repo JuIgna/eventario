@@ -18,7 +18,7 @@ if (isset($_SESSION['esAdmin']) && $_SESSION['esAdmin'] == 1) {
   $IDorganizador = $_SESSION['IDorganizador'];
 
   // Consulta para obtener los eventos del organizador
-  $query = "SELECT e.evento, e.fecha, e.lugar, e.descripcion, e.hora, e.hora_fin, e.limite_inscritos, e.imagen
+  $query = "SELECT e.IDeventos, e.evento, e.fecha, e.lugar, e.descripcion, e.hora, e.hora_fin, e.limite_inscritos, e.imagen
             FROM eventos AS e
             INNER JOIN eventosorganizador AS eo ON e.IDeventos = eo.IDeventos
             WHERE eo.IDorganizador = $IDorganizador";
