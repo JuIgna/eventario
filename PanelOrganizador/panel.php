@@ -11,9 +11,9 @@ session_start();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel Administracion</title>
   <link rel="stylesheet" type="text/css" href="css/estilosOrganizador.css">
-  <script src="scripts/panelOrganizador.js"></script>
+<!--  <script src="scripts/panelOrganizador.js"></script> -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.min.js"></script>
+<!--  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.min.js"></script> -->
 </head>
 
 <body>
@@ -35,7 +35,8 @@ session_start();
       die("Error en la conexión a la base de datos: " . $connection->connect_error);
     }
     $IDorganizador = $_SESSION['IDorganizador']; // Obten el ID del organizador desde la sesión
-
+    $IDeventos = null;
+    
     echo "<div class='button-container'>";
     echo "<a href='cerrarSesion.php'>Cerrar sesión</a>";
     echo "</div>";
@@ -45,6 +46,7 @@ session_start();
 
   <main>
     <?php
+    
     if (isset($_SESSION['esAdmin']) && $_SESSION['esAdmin'] == 1) {
       // Si el usuario es un organizador, mostrar el botón para agregar eventos
       echo "<section>";
@@ -99,6 +101,7 @@ session_start();
       
       echo "</script>";
 
+
       echo "<script>
       document.getElementById('view-events-button').addEventListener('click', function() {
         
@@ -145,28 +148,40 @@ session_start();
             '<p>Descripción: ' + evento.descripcion + '</p>' +
             '<p>Hora de inicio: ' + evento.hora + '</p>' +
             '<p>Hora de finalización: ' + evento.hora_fin + '</p>' +
+            '<p>ID: ' + evento.IDeventos + '</p>' +
             '<p>Límite de inscripciones: ' + evento.limite_inscritos + '</p>';
       
           // Agrega la imagen y los detalles al elemento de lista
           eventoItem.appendChild(eventoImage);
           eventoItem.appendChild(eventoDetails);
       
-          // Agrega el elemento de lista al contenedor de lista (ul)
-          eventList.appendChild(eventoItem);
+          const detalleEventoButton = document.createElement('button');
+          detalleEventoButton.innerText = 'Ver detalle';
+          detalleEventoButton.classList.add('detail-event-button');
+          detalleEventoButton.addEventListener('click', () => {
+            // Obtén el ID del evento que se va a editar
+            const numeroIDeventos = evento.IDeventos;
           
-          const editarEventoButton = document.createElement('button');
-          editarEventoButton.innerText = 'Editar Evento';
-          editarEventoButton.classList.add('edit-event-button');
-          editarEventoButton.addEventListener('click', () => {
-              // Agrega aquí la lógica para editar el evento cuando se haga clic en el botón
-              // Puedes redirigir a una página de edición o mostrar un formulario de edición en un modal.
+            // Convierte IDeventos a un número entero
+            const IDeventos = parseInt(numeroIDeventos);
+          
+            console.log('evento.IDeventos:', evento.IDeventos);
+          
+            // Asegúrate de que IDeventos sea un número válido
+            if (!isNaN(IDeventos)) {
+              console.log('Redirigiendo a la página de detalleEvento.php');
+              // window.location.href = `detalleEvento.php?IDeventos=37`; Se pasa correctamente
+             // window.location.href = `detalleEvento.php?IDeventos=${IDeventos}`; // No se pasa correctamente
+            } else {
+              console.error('IDeventos no es un número válido.');
+            }
           });
-          // Agrega el botón 'Editar evento' al elemento de detalles
-          eventoDetails.appendChild(editarEventoButton);
+          
+          // Agrega el botón 'Detalle Evento' al elemento de detalles
+          eventoDetails.appendChild(detalleEventoButton);
       
           // Agregar el elemento de lista (li) a la lista (ul)
           eventList.appendChild(eventoItem);
-
 
         });
       
@@ -177,7 +192,7 @@ session_start();
       
       echo "<div id='eventos-container' class='eventos-container'></div>";
        
-
+      
       // Codigo para agregar eventos
       if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Obtener los valores del formulario
