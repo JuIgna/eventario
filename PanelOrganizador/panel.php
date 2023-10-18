@@ -160,21 +160,17 @@ session_start();
           detalleEventoButton.classList.add('detail-event-button');
           detalleEventoButton.addEventListener('click', () => {
             // Obtén el ID del evento que se va a editar
-            const numeroIDeventos = evento.IDeventos;
+            let numeroIDeventos = evento.IDeventos;
           
             // Convierte IDeventos a un número entero
-            const IDeventos = parseInt(numeroIDeventos);
+           // const IDevento = parseInt(numeroIDeventos);
           
-            console.log('evento.IDeventos:', evento.IDeventos);
+            console.log('evento.IDeventos:', numeroIDeventos);
           
-            // Asegúrate de que IDeventos sea un número válido
-            if (!isNaN(IDeventos)) {
-              console.log('Redirigiendo a la página de detalleEvento.php');
-              // window.location.href = `detalleEvento.php?IDeventos=37`; Se pasa correctamente
-             // window.location.href = `detalleEvento.php?IDeventos=${IDeventos}`; // No se pasa correctamente
-            } else {
-              console.error('IDeventos no es un número válido.');
-            }
+            console.log('Redirigiendo a la página de detalleEvento.php');
+            // window.location.href = `detalleEvento.php?IDeventos=37`; Se pasa correctamente
+             window.location.href = 'detalleEvento.php?IDeventos='+ numeroIDeventos; // No se pasa correctamente
+            
           });
           
           // Agrega el botón 'Detalle Evento' al elemento de detalles

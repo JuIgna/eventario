@@ -1,0 +1,103 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  
+  header {
+    background-color: #34495E;
+    color: #FAD7A0;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  h1 {
+    margin: 0;
+  }
+  
+  main {
+    padding: 20px;
+    background-color: #FAD7A0;
+    background-image: linear-gradient(135deg, #FAD7A0 0%, #e09fa1 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 87.8vh;
+  }
+  
+  section {
+    margin-bottom: 20px;
+  }
+
+  /* Estilos de la descripcion del evento */
+.event-item {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #F5B7B1;
+}
+
+.event-item img {
+    margin-right: 20px;
+}
+
+.event-details {
+    text-align: left;
+}
+
+.event-details h2 {
+    margin-top: 0;
+}
+
+.event-details p {
+    margin-top: 5px;
+}
+
+/* Si deseas darle un estilo específico a la imagen del evento */
+.event-image {
+    max-width: 250px; /* Ajusta el ancho máximo según tus preferencias */
+    max-height: 250px; /* Ajusta la altura máxima según tus preferencias */
+}
+
+  
+  /* Estilos del botón de inicio de sesión */
+  #login-button {
+    background-color: #FAD7A0;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  /* Estilos para el pop-up de error */
+  .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    display: none;
+  }
+
+  .logo-link {
+    text-decoration: none;
+    color: #FAD7A0;
+  }
+
+

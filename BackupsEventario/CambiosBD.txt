@@ -1,5 +1,5 @@
 Eventos: IDeventos, evento, fecha, lugar, imagen, descripcion, hora, limite_inscritos, hora_fin
 Usuarios: IDusuario, nombre, email, contrasena, esAdmin, apellido, celular.
-Inscripciones: IDinscripcion, IDeventos, IDusuario
+Inscripciones: IDinscripcion, IDeventos, IDusuario, asistio, pago
 Organizador: IDorganizador, nombre, correo, contrasena, celular
 EventosOrganizador: IDorganizador, IDeventos

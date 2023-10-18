@@ -23,25 +23,26 @@ if (!isset($_SESSION['esAdmin']) || $_SESSION['esAdmin'] != 1) {
     }
     $IDorganizador = $_SESSION['IDorganizador']; // Obten el ID del organizador desde la sesión
     
-
+?>
+<?php
     // Obtener el ID del evento de la URL
-if (isset($_POST['IDeventos'])) {
-    echo "Valor de \$_GET['IDeventos']: " . $_GET['IDeventos'];
-
+if (isset($_GET['IDeventos'])) {
+    // echo "Valor de \$_GET['IDeventos']: " . $_GET['IDeventos'];
+    // echo "Valor de \$IDeventos después de obtenerlo: " . $IDeventos;
 
     $IDeventos = $_GET['IDeventos'];
 
-    echo "Valor de \$IDeventos después de obtenerlo: " . $IDeventos;
+    
 
     // Consulta para obtener la información del evento
     $queryEvento = "SELECT * FROM eventos WHERE IDeventos = '$IDeventos'";
     $resultEvento = $connection->query($queryEvento);
 
     // Consulta para obtener la lista de usuarios inscritos en el evento
-    $queryUsuariosInscritos = "SELECT u.IDusuario, u.nombre, u.email, u.apellido, u.celular
-                               FROM usuarios u
-                               INNER JOIN inscripciones i ON u.IDusuario = i.IDusuario
-                               AND i.IDeventos = '$IDeventos'";
+    $queryUsuariosInscritos = "SELECT u.IDusuario, u.nombre, u.apellido, u.email, u.celular, i.asistio, i.pago
+    FROM usuarios u
+    INNER JOIN inscripciones i ON u.IDusuario = i.IDusuario
+    AND i.IDeventos = '$IDeventos'";
 
     $resultUsuariosInscritos = $connection->query($queryUsuariosInscritos);
 
@@ -71,7 +72,7 @@ if (isset($_POST['IDeventos'])) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel Administracion</title>
-  <link rel="stylesheet" type="text/css" href="css/estilosOrganizador.css">
+  <link rel="stylesheet" type="text/css" href="css/estilosDetalleEvento.css">
   <script src="scripts/panelOrganizador.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.min.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.min.js"></script>
@@ -93,40 +94,46 @@ if (isset($_POST['IDeventos'])) {
 
 
   <main>
-        <section>
-            <!-- Descripción del evento -->
-            <h2>Descripción del Evento</h2>
-            <p>Nombre del Evento: <?php echo $evento['evento']; ?></p>
-            <p>Fecha: <?php echo $evento['fecha']; ?></p>
-            <p>Lugar: <?php echo $evento['lugar']; ?></p>
-            <p>Descripción: <?php echo $evento['descripcion']; ?></p>
-            <p>Hora de inicio: <?php echo $evento['hora']; ?></p>
-            <p>Hora de finalización: <?php echo $evento['hora_fin']; ?></p>
-            <p>Límite de inscripciones: <?php echo $evento['limite_inscritos']; ?></p>
-        </section>
+  <section class="event-item">
+    <img class="event-image" src="<?php echo $evento['imagen']; ?>" alt="Imagen del evento">
+    <div class="event-details">
+        <h2>Descripción del Evento</h2>
+        <p>Nombre del Evento: <?php echo $evento['evento']; ?></p>
+        <p>Fecha: <?php echo $evento['fecha']; ?></p>
+        <p>Lugar: <?php echo $evento['lugar']; ?></p>
+        <p>Descripción: <?php echo $evento['descripcion']; ?></p>
+        <p>Hora de inicio: <?php echo $evento['hora']; ?></p>
+        <p>Hora de finalización: <?php echo $evento['hora_fin']; ?></p>
+        <p>Límite de inscripciones: <?php echo $evento['limite_inscritos']; ?></p>
+    </div>
+</section>
 
-        <section>
-            <!-- Lista de Usuarios Inscritos -->
-            <h2>Usuarios Inscritos</h2>
-            <table>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Email</th>
-                    <th>Celular</th>
-                </tr>
-                <?php
-                    while ($usuario = $resultUsuariosInscritos->fetch_assoc()) {
-                        echo "<tr>";
-                        echo "<td>" . $usuario['nombre'] . "</td>";
-                        echo "<td>" . $usuario['apellido'] . "</td>";
-                        echo "<td>" . $usuario['email'] . "</td>";
-                        echo "<td>" . $usuario['celular'] . "</td>";
-                        echo "</tr>";
-                    }
-                ?>
-            </table>
-        </section>
+<section>
+    <!-- Lista de Usuarios Inscritos -->
+    <h2>Descripción de los Usuarios Inscritos</h2>
+    <table>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Celular</th>
+            <th>Asistió</th>
+            <th>Pago</th>
+        </tr>
+        <?php
+            while ($usuario = $resultUsuariosInscritos->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . $usuario['nombre'] . "</td>";
+                echo "<td>" . $usuario['apellido'] . "</td>";
+                echo "<td>" . $usuario['email'] . "</td>";
+                echo "<td>" . $usuario['celular'] . "</td>";
+                echo "<td>" . ($usuario['asistio'] ? 'Sí' : 'No') . "</td>"; // Mostrar Sí o No
+                echo "<td>" . ($usuario['pago'] ? 'Sí' : 'No') . "</td>"; // Mostrar Sí o No
+                echo "</tr>";
+            }
+        ?>
+    </table>
+</section>
     </main>
 
 </body>
