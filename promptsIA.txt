@@ -1,0 +1,1 @@
+estoy desarrollando una pagina llamado "eventario" en la cual hay eventos que son creados por organizadores, y los usuarios son capaces de inscribirse a los mismos, actualmente estoy programando funcionalidades dentro del panel del organiazador en el cual gestiona y crea eventos. Podrias ayudarme con mi codigo?
