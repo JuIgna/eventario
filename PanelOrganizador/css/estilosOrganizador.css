@@ -196,6 +196,19 @@ body {
   margin-bottom: 10px;
 }
 
+#logout-button{
+  background-color: #FAD7A0;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 
 /* Estilos para el formulario modal */
 .modal {

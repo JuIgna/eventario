@@ -85,7 +85,8 @@ if (isset($_GET['IDeventos'])) {
     <?php
 
     echo "<div class='button-container'>";
-    echo "<a href='cerrarSesion.php'>Cerrar sesión</a>";
+    echo "<a id='panel-button'href='panel.php'>Volver al panel</a>";
+    echo "<a id='logout-button' href='cerrarSesion.php'>Cerrar sesión</a>";
     echo "</div>";
     
     ?>
@@ -111,28 +112,36 @@ if (isset($_GET['IDeventos'])) {
 <section>
     <!-- Lista de Usuarios Inscritos -->
     <h2>Descripción de los Usuarios Inscritos</h2>
-    <table>
-        <tr>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Email</th>
-            <th>Celular</th>
-            <th>Asistió</th>
-            <th>Pago</th>
-        </tr>
-        <?php
-            while ($usuario = $resultUsuariosInscritos->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td>" . $usuario['nombre'] . "</td>";
-                echo "<td>" . $usuario['apellido'] . "</td>";
-                echo "<td>" . $usuario['email'] . "</td>";
-                echo "<td>" . $usuario['celular'] . "</td>";
-                echo "<td>" . ($usuario['asistio'] ? 'Sí' : 'No') . "</td>"; // Mostrar Sí o No
-                echo "<td>" . ($usuario['pago'] ? 'Sí' : 'No') . "</td>"; // Mostrar Sí o No
-                echo "</tr>";
-            }
-        ?>
-    </table>
+    <form action="guardarCambios.php" method="post">
+        <table>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Celular</th>
+                <th>Asistió</th>
+                <th>Pago</th>
+            </tr>
+            <?php
+                while ($usuario = $resultUsuariosInscritos->fetch_assoc()) {
+                    echo "<tr>";
+                    echo "<td>" . $usuario['nombre'] . "</td>";
+                    echo "<td>" . $usuario['apellido'] . "</td>";
+                    echo "<td>" . $usuario['email'] . "</td>";
+                    echo "<td>" . $usuario['celular'] . "</td>";
+                    echo "<td>";
+                    echo "<input type='checkbox' name='asistio[]' value='" . $usuario['IDusuario'] . "' " . ($usuario['asistio'] ? 'checked' : '') . ">";
+                    echo "</td>";
+                    echo "<td>";
+                    echo "<input type='checkbox' name='pago[]' value='" . $usuario['IDusuario'] . "' " . ($usuario['pago'] ? 'checked' : '') . ">";
+                    echo "</td>";
+                    echo "</tr>";
+                }
+            ?>
+        </table>
+        <button id = "save-user-changes-button" type="submit" name="guardarCambios">Guardar Cambios de Usuarios</button>
+        <input type="hidden" name="IDeventos" value="<?php echo $IDeventos; ?>">
+    </form>
 </section>
     </main>
 
