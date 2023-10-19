@@ -38,7 +38,7 @@ session_start();
     $IDeventos = null;
     
     echo "<div class='button-container'>";
-    echo "<a href='cerrarSesion.php'>Cerrar sesión</a>";
+    echo "<a id='logout-button' href='cerrarSesion.php'>Cerrar sesión</a>";
     echo "</div>";
     
     ?>
