@@ -1,1 +1,33 @@
+**************** Contexto de eventario: **********************
 estoy desarrollando una pagina llamado "eventario" en la cual hay eventos que son creados por organizadores, y los usuarios son capaces de inscribirse a los mismos, actualmente estoy programando funcionalidades dentro del panel del organiazador en el cual gestiona y crea eventos. Podrias ayudarme con mi codigo?
+
+************ Contexto del panel organizador *********************
+Actualmente estoy desarrollando el panel de organizador, en el cual si el usuario inicia sesion como "orgaizador" entonces el puede acceder a este panel que tiene dos botones.
+Agregar evento: boton que le permite agregar un evento al organizador.
+Ver mis eventos: Boton que muestra un listado de los eventos por el organizador que creo sesion.
+Ahora estoy trabajando en un boton nuevo que se llama "Ver detalle" que aparece en cada evento del listado de eventos, cuyo objetivo es mandar al organizador a una nueva pagina llamada
+detalle evento en la cual haya una descripcion del evento que se quiere ver el detalle y ademas una descripcion de los usuarios inscriptos a dicho evento en forma de tabla.
+
+*************** Esta es la estructura de mi base de datos: ************************************
+Eventos: IDeventos, evento, fecha, lugar, imagen, descripcion, hora, limite_inscritos, hora_fin
+Usuarios: IDusuario, nombre, email, contrasena, esAdmin, apellido, celular.
+Inscripciones: IDinscripcion, IDeventos, IDusuario
+Organizador: IDorganizador, nombre, correo, contrasena, celular
+EventosOrganizador: IDorganizador, IDeventos
+
+Este es mi codigo panel organizador:
+
+
+
+************************** Contexto de DetalleEvento.php ***************************************
+Actualmente estoy desarrollando el panel de organizador, en el cual si el usuario inicia sesion como "orgaizador" entonces el puede acceder a este panel que tiene dos botones.
+Agregar evento: boton que le permite agregar un evento al organizador.
+Ver mis eventos: Boton que muestra un listado de los eventos por el organizador que creo sesion.
+Ahora estoy trabajando en un boton nuevo que se llama "Ver detalle" que aparece en cada evento del listado de eventos, cuyo objetivo es mandar al organizador a una nueva pagina llamada
+detalle evento en la cual haya una descripcion del evento que se quiere ver el detalle y ademas una descripcion de los usuarios inscriptos a dicho evento en forma de tabla.
+
+En dicha pagina detalleEvento.php el organizador ve una descripcion del evento que selecciono y ademas una descripcion de los usuarios inscriptos en forma de tabla en la cual el organizador
+ademas puede indicar si dicho usuario pago y asistio al evento (puede guardar cambios de dichas variables que son 0 (no asistio/pago) o 1 (si asistio/pago).
+
+
+
