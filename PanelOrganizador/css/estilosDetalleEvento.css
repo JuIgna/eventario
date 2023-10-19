@@ -67,6 +67,8 @@ body {
     max-height: 250px; /* Ajusta la altura máxima según tus preferencias */
 }
 
+
+
   
   /* Estilos del botón de inicio de sesión */
   #login-button {
@@ -136,6 +138,27 @@ body {
     cursor: pointer;
     margin-right: 10px;
 
-  }
+}
 
+#edit-event-button{
+  padding: 10px 20px;
+  margin: 5px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 10px;
+
+}
+
+#delete-event-button{
+  padding: 10px 20px;
+  margin: 5px;
+  background-color: #e70a0a;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 10px;
+
+}
 
