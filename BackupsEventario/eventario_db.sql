@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-10-2023 a las 22:02:43
+-- Tiempo de generación: 19-10-2023 a las 06:38:05
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -24,49 +24,47 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `eventos`
+-- Estructura de tabla para la tabla `usuarios`
 --
 
-CREATE TABLE `eventos` (
-  `IDeventos` int(11) NOT NULL,
-  `evento` varchar(100) NOT NULL,
-  `fecha` date NOT NULL,
-  `lugar` varchar(100) NOT NULL,
-  `imagen` varchar(100) NOT NULL,
-  `descripcion` varchar(500) DEFAULT NULL,
-  `hora` time DEFAULT NULL,
-  `limite_inscritos` int(11) DEFAULT NULL,
-  `hora_fin` time DEFAULT NULL
+CREATE TABLE `usuarios` (
+  `IDusuario` int(11) NOT NULL,
+  `nombre` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `contrasena` varchar(255) NOT NULL,
+  `esAdmin` varchar(1) DEFAULT NULL,
+  `apellido` varchar(255) NOT NULL,
+  `celular` varchar(25) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `eventos`
+-- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `eventos` (`IDeventos`, `evento`, `fecha`, `lugar`, `imagen`, `descripcion`, `hora`, `limite_inscritos`, `hora_fin`) VALUES
-(24, 'Maratón Rio Tercero', '2023-09-10', 'Ciudad de Rio Tercero', 'images/diCiudadRio3.png', 'Vení a disfrutar de esta imperdible maratón en la ciudad de Rio Tercero por el 110 aniversario de la ciudad!!', '10:00:00', 150, '13:00:00'),
-(37, 'Semana TIC', '2023-10-18', 'Universidad Blas Pascal', 'images/tic.png', 'Disfruta de la semana TIC en Cordoba de la mano de increibles charlas y proyectos educativos y tecnologicos!!', '17:00:00', 50, '20:00:00'),
-(38, 'Torneo Clash', '2023-10-21', 'Rio Tercero', 'images/unnamed.png', 'Veni a cagarte a trompadas en este torneo de Clash Royale!!', '10:00:00', 20, '17:00:00');
+INSERT INTO `usuarios` (`IDusuario`, `nombre`, `email`, `contrasena`, `esAdmin`, `apellido`, `celular`) VALUES
+(18, 'Juan', 'vazquez800juan@gmail.com', '12345678', 's', 'Vazquez', '3571603501'),
+(19, 'fede', 'fededella@gmail.com', '12345678', NULL, 'dellavalle', '448988');
 
 --
 -- Índices para tablas volcadas
 --
 
 --
--- Indices de la tabla `eventos`
+-- Indices de la tabla `usuarios`
 --
-ALTER TABLE `eventos`
-  ADD PRIMARY KEY (`IDeventos`);
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`IDusuario`),
+  ADD UNIQUE KEY `UC_nombre_completo` (`nombre`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT de la tabla `eventos`
+-- AUTO_INCREMENT de la tabla `usuarios`
 --
-ALTER TABLE `eventos`
-  MODIFY `IDeventos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+ALTER TABLE `usuarios`
+  MODIFY `IDusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
