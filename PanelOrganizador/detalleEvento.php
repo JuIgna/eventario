@@ -147,7 +147,7 @@ function verificarYEliminarEvento(activo, eventoID) {
                                 data: { eventID: eventoID },
                                 success: function (response) {
                                     if (response === "success") {
-                                        //Solucionar el problema de que aca no entre
+                                        //Solucionar el problema de que aca no entre por aca
                                         Swal.fire({
                                             icon: 'success',
                                             title: 'Éxito',
