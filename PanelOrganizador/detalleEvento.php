@@ -105,6 +105,88 @@ if (isset($_GET['IDeventos'])) {
     });
     </script>
 
+<script>
+
+function verificarYEliminarEvento(activo, eventoID) {
+    if (activo == 1) {
+        // El evento está activo, muestra un mensaje de error
+        Swal.fire({
+            icon: 'error',
+            title: 'No se puede eliminar',
+            text: 'No se puede eliminar un evento activo o con inscriptos.'
+        });
+    } else {
+        // El evento no está activo, verifica inscripciones
+        $.ajax({
+            type: "POST",
+            url: "verificarInscripciones.php", // Crea un archivo PHP para manejar esta acción
+            data: { eventID: eventoID },
+            success: function (response) {
+                if (response === "inscripciones") {
+                    // El evento tiene inscritos, muestra un mensaje de error
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'No se puede eliminar',
+                        text: 'No se puede eliminar un evento con inscriptos.'
+                    });
+                } else {
+                    // El evento no tiene inscritos, muestra un mensaje de confirmación
+                    Swal.fire({
+                        icon: 'warning',
+                        title: '¿Estás seguro?',
+                        text: '¿Deseas eliminar este evento?',
+                        showCancelButton: true,
+                        confirmButtonText: 'Sí, eliminar',
+                        cancelButtonText: 'Cancelar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Realiza la eliminación del evento si no tiene inscritos
+                            $.ajax({
+                                type: "POST",
+                                url: "eliminarEvento.php", // Crea un archivo PHP para manejar la eliminación
+                                data: { eventID: eventoID },
+                                success: function (response) {
+                                    if (response === "success") {
+                                        //Solucionar el problema de que aca no entre
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Éxito',
+                                            text: 'El evento se ha eliminado correctamente.',
+                                            confirmButtonText: 'Continuar'
+                                        }).then(() => {
+                                            // Redirige al usuario a la página panel.organizador.php
+                                            window.location.href = 'panel.php';
+                                        });
+                                    } else {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Éxito',
+                                            text: 'El evento se ha eliminado correctamente.',
+                                            confirmButtonText: 'Continuar'
+                                        }).then(() => {
+                                            // Redirige al usuario a la página panel.organizador.php
+                                            window.location.href = 'panel.php';
+                                        });       
+                                    }
+                                },
+                            });
+                        }
+                    });
+                }
+            },
+            error: function (error) {
+                // Maneja errores aquí si es necesario
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Hubo un problema al verificar las inscripciones.'
+                });
+            }
+        });
+    }
+}
+</script>
+
 <header>
     <h1><a href="../index.html" class="logo-link"> Eventario </a> </h1>
 
@@ -145,7 +227,8 @@ if (isset($_GET['IDeventos'])) {
             </button>
 
             <button id="edit-event-button">Editar Evento</button>
-            <button id="delete-event-button">Eliminar Evento</button>
+            <button id="delete-event-button" onclick="verificarYEliminarEvento(<?php echo $evento['activo']; ?>, <?php echo $IDeventos; ?>)">Eliminar Evento</button>
+
         </div>
     </div>
 
