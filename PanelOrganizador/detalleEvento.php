@@ -79,6 +79,32 @@ if (isset($_GET['IDeventos'])) {
 </head>
 
 <body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function () {
+        $("#toggle-event-button").on("click", function () {
+            var eventID = $(this).data("eventid");
+            var nuevoValor = $(this).data("nuevo-valor");
+
+            $.ajax({
+                type: "POST",
+                url: "toggleEvento.php", // Crea un archivo PHP para manejar esta acción
+                data: { eventID: eventID, nuevoValor: nuevoValor },
+                success: function (response) {
+                    // Puedes mostrar una confirmación si lo deseas
+                    alert(response);
+                    // Recarga la página para reflejar los cambios
+                    location.reload();
+                },
+                error: function (error) {
+                    // Maneja errores aquí si es necesario
+                    alert("Error: " + error);
+                }
+            });
+        });
+    });
+    </script>
+
 <header>
     <h1><a href="../index.html" class="logo-link"> Eventario </a> </h1>
 
@@ -106,12 +132,26 @@ if (isset($_GET['IDeventos'])) {
         <p>Hora de inicio: <?php echo $evento['hora']; ?></p>
         <p>Hora de finalización: <?php echo $evento['hora_fin']; ?></p>
         <p>Límite de inscripciones: <?php echo $evento['limite_inscritos']; ?></p>
+        <p>El evento <?php echo $evento['activo'] ? 'está activo' : 'no está activado'; ?></p>
 
         <div class="event-buttons">
+            <?php
+                $activo = $evento['activo'];
+                $accion = $activo ? 'Desactivar' : 'Activar';
+                $nuevoValor = $activo ? 0 : 1;
+            ?>
+            <button id="toggle-event-button" data-eventid="<?php echo $IDeventos; ?>" data-nuevo-valor="<?php echo $nuevoValor; ?>">
+            <?php echo $accion; ?> Evento
+            </button>
+
             <button id="edit-event-button">Editar Evento</button>
             <button id="delete-event-button">Eliminar Evento</button>
         </div>
     </div>
+
+
+
+
 
 
 </section>
