@@ -30,4 +30,5 @@ En dicha pagina detalleEvento.php el organizador ve una descripcion del evento q
 ademas puede indicar si dicho usuario pago y asistio al evento (puede guardar cambios de dichas variables que son 0 (no asistio/pago) o 1 (si asistio/pago).
 
 
-
+error a solucionar:
+Warning: Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\eventario\PanelOrganizador\panel.php:105) in C:\xampp\htdocs\eventario\PanelOrganizador\panel.php on line 239
