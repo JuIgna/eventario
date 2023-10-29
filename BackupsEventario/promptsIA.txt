@@ -32,3 +32,16 @@ ademas puede indicar si dicho usuario pago y asistio al evento (puede guardar ca
 
 error a solucionar:
 Warning: Cannot modify header information - headers already sent by (output started at C:\xampp\htdocs\eventario\PanelOrganizador\panel.php:105) in C:\xampp\htdocs\eventario\PanelOrganizador\panel.php on line 239
+
+
+
+
+******* Contexto de boton "Editar Evento" ********
+Estoy desarrollando una pagina llamado "eventario" en la cual hay eventos que son creados por organizadores, y los usuarios normales son capaces de inscribirse a los mismos, actualmente estoy programando funcionalidades dentro del panel del organizador en el cual gestiona eventos (crea, edita, elimina o activa).
+
+Actualmente estoy desarrollando el panel de organizador, en el cual si el usuario inicia sesion como "organizador" entonces el puede acceder a este panel que tiene dos botones.
+Agregar evento: botón que le permite agregar un evento al organizador.
+Ver mis eventos: Botón que muestra un listado de los eventos creados por el organizador que inicio sesion.
+Ademas cada evento tiene un botón "Ver detalle" cuyo objetivo es mandar al organizador a una nueva pagina llamada detalle evento en la cual haya una descripción del evento que se quiere ver y ademas una descripcion de los usuarios inscriptos a dicho evento en forma de tabla. El organizador en dicha tabla de usuarios puede indicar si dicho usuario pago y asistio al evento (puede guardar cambios de dichas variables que son 0 (no asistio/pago) o 1 (si asistio/pago).
+Actualmente estoy trabajando sobre las funcionalidades editar evento por parte del organizador. 
+quiero que juntos programemos esta funcionalidad para lograr concretarla en base al codigo que yo te voy a proporcionar de detalleEvento.php en el siguiente prompt, de acuerdo?

@@ -174,3 +174,29 @@ body {
 
 }
 
+/* Estilo para elementos en modo de edición (input) */
+.edit-mode input {
+  border: 1px solid #ccc; /* Agrega un borde alrededor del input */
+  padding: 4px; /* Agrega un poco de espacio interior para que se vea mejor */
+  display: inline; /* Hace que el input sea visible en línea */
+}
+
+/* Estilo para botones de edición */
+.edit-button {
+  background-color: #007BFF; /* Color de fondo del botón */
+  color: #fff; /* Color del texto del botón */
+  border: none; /* Elimina el borde del botón */
+  border-radius: 4px; /* Agrega bordes redondeados */
+  padding: 8px 16px; /* Agrega espacio dentro del botón */
+  cursor: pointer; /* Cambia el cursor a un puntero al pasar el mouse */
+}
+
+/* Estilo para botones de guardado (visible después de hacer clic en "Editar") */
+.save-button {
+  background-color: #28A745; /* Cambia el color de fondo para indicar que es un botón de guardado */
+  /* Puedes mantener los mismos estilos que los botones de edición o personalizarlos según tu preferencia */
+}
+
+.edit-input {
+  display: none;
+}
