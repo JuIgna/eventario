@@ -348,10 +348,10 @@ if (isset($_GET['IDeventos'])) {
                 }
 
                 // Agrega event listeners a los botones de edición y guardar
-                const fieldsToEdit = ["evento-evento", /* Agrega otros campos aquí */];
+                const fieldsToEdit = ["evento-evento", "fecha-evento", "lugar-evento", "descripcion-evento", "hora-evento", "hora_fin-evento", "limite_inscritos-evento"];
 
                 fieldsToEdit.forEach(function (fieldId) {
-                    console.log(fieldId);
+                    console.log (fieldId)
                     const editButton = document.getElementById("edit-" + fieldId + "-button");
                     const saveButton = document.getElementById("save-" + fieldId + "-button");
 
@@ -371,8 +371,7 @@ if (isset($_GET['IDeventos'])) {
                             if (xhr.readyState === 4) {
                                 if (xhr.status === 200) {
                                     if (xhr.responseText === "success") {
-                                        // Actualización exitosa, actualiza el campo en tiempo real
-                                        document.getElementById(fieldId + "-text").textContent = editedValue;
+                                        // La actualización fue exitosa, puedes manejar la respuesta aquí si es necesario
                                     } else {
                                         // Ocurrió un error durante la actualización, maneja el error si es necesario
                                     }
