@@ -48,8 +48,8 @@ session_start();
 
 
       echo "<div class='button-container'>";
-      echo "<a href='misEventos.php'>Mis eventos</a>";
-      echo "<a href='cerrarSesion.php'>Cerrar sesión</a>";
+      echo "<a id='my-buttons' href='misEventos.php'>Mis eventos</a>";
+      echo "<a id='logout-button' href='cerrarSesion.php'>Cerrar sesión</a>";
       echo "</div>";
 
     } else {
@@ -84,7 +84,7 @@ session_start();
         }
 
         // Consulta para obtener los eventos de la base de datos
-        $query = "SELECT * FROM eventos ORDER BY fecha ASC";
+        $query = "SELECT * FROM eventos WHERE activo = 1 ORDER BY fecha ASC";
         $result = $connection->query($query);
 
         // Comprobar si hay eventos
