@@ -11,7 +11,7 @@ session_start();
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mis Eventos</title>
-  <link rel="stylesheet" type="text/css" href="css/styles.css">
+  <link rel="stylesheet" type="text/css" href="css/listaEventos.css">
   <script src="scriptEventos.js"></script>
 </head>
 
@@ -25,8 +25,8 @@ session_start();
     if (isset($_SESSION['username'])) {
       $username = $_SESSION['username'];
       echo "<div class='button-container'>";
-      echo "<a href='misEventos.php'>Mis eventos</a>";
-      echo "<a href='cerrarSesion.php'>Cerrar sesión</a>";
+      echo "<a id='events-list' href='misEventos.php'>Mis eventos</a>";
+      echo "<a id='logout-button' href='cerrarSesion.php'>Cerrar sesión</a>";
       echo "</div>";
     } else {
       echo "<button id='login-button' onclick='redirectToLogin()'>Iniciar sesión</button>";
@@ -87,7 +87,7 @@ session_start();
             echo "<li>";
             echo "<div class='event-item'>";
             echo "<div class='event-image'>";
-            echo "<img class='event-image__img' src='$imagen' alt='Imagen del evento'>";
+            echo "<img class='event-image__img' src='../PanelOrganizador/$imagen' alt='Imagen del evento'>";
             echo "</div>";
             echo "<div class='event-details'>";
             echo "<h4>$evento</h4>";

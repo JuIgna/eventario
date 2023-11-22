@@ -303,7 +303,8 @@ if (isset($_GET['IDeventos'])) {
                         <?php echo $accion; ?> Evento
                     </button>
 
-                    <button id="edit-event-button">Editar Evento</button>
+                    <!-- <button id="edit-event-button">Editar Evento</button>  codigo sin uso--> 
+
                     <button id="delete-event-button"
                         onclick="verificarYEliminarEvento(<?php echo $evento['activo']; ?>, <?php echo $IDeventos; ?>)">Eliminar
                         Evento</button>
@@ -348,7 +349,7 @@ if (isset($_GET['IDeventos'])) {
                 }
 
                 // Agrega event listeners a los botones de edición y guardar
-                const fieldsToEdit = ["evento-evento", /* Agrega otros campos aquí */];
+                const fieldsToEdit = ["evento-evento", "fecha-evento", "lugar-evento", "descripcion-evento", "hora-evento", "hora_fin-evento", "limite_inscritos-evento"];
 
                 fieldsToEdit.forEach(function (fieldId) {
                     console.log(fieldId);
@@ -371,8 +372,9 @@ if (isset($_GET['IDeventos'])) {
                             if (xhr.readyState === 4) {
                                 if (xhr.status === 200) {
                                     if (xhr.responseText === "success") {
-                                        // Actualización exitosa, actualiza el campo en tiempo real
-                                        document.getElementById(fieldId + "-text").textContent = editedValue;
+                                        // La actualización fue exitosa
+                                        document.getElementById(fieldId + "-text").textContent = editedValue; // Actualiza el valor en tiempo real
+                                        toggleEditMode(fieldId); // Restaura el campo al estado normal
                                     } else {
                                         // Ocurrió un error durante la actualización, maneja el error si es necesario
                                     }
@@ -385,9 +387,6 @@ if (isset($_GET['IDeventos'])) {
                 });
             });
         </script>
-
-
-
 
         <section>
             <!-- Lista de Usuarios Inscritos -->

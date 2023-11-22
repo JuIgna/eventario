@@ -1,5 +1,7 @@
 **************** Contexto de eventario: **********************
-estoy desarrollando una pagina llamado "eventario" en la cual hay eventos que son creados por organizadores, y los usuarios son capaces de inscribirse a los mismos, actualmente estoy programando funcionalidades dentro del panel del organiazador en el cual gestiona y crea eventos. Podrias ayudarme con mi codigo?
+estoy desarrollando una pagina llamado "eventario" en la cual hay eventos que son creados por organizadores, 
+y los usuarios son capaces de inscribirse a los mismos, actualmente estoy programando funcionalidades dentro del panel del 
+organiazador en el cual gestiona y crea eventos. Podrias ayudarme con mi codigo?
 
 ************ Contexto del panel organizador *********************
 Actualmente estoy desarrollando el panel de organizador, en el cual si el usuario inicia sesion como "orgaizador" entonces el puede acceder a este panel que tiene dos botones.

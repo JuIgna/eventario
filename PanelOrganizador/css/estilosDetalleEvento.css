@@ -183,12 +183,13 @@ body {
 
 /* Estilo para botones de edición */
 .edit-button {
-  background-color: #007BFF; /* Color de fondo del botón */
+  background-color: #24b25a; /* Color de fondo del botón */
   color: #fff; /* Color del texto del botón */
   border: none; /* Elimina el borde del botón */
   border-radius: 4px; /* Agrega bordes redondeados */
   padding: 8px 16px; /* Agrega espacio dentro del botón */
-  cursor: pointer; /* Cambia el cursor a un puntero al pasar el mouse */
+  cursor: pointer;
+  margin-left: 25px /* Cambia el cursor a un puntero al pasar el mouse */
 }
 
 /* Estilo para botones de guardado (visible después de hacer clic en "Editar") */
