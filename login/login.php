@@ -56,6 +56,7 @@ $servername = "localhost"; // Cambia esto si tu servidor MySQL está en un host 
 $username = "eventario_juan";
 $password_db = "juan$2023";
 $dbname = "eventario_db";
+// hola flaco
 
 $conn = new mysqli($servername, $username, $password_db, $dbname);
 
