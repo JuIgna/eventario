@@ -47,3 +47,11 @@ Ver mis eventos: Botón que muestra un listado de los eventos creados por el org
 Ademas cada evento tiene un botón "Ver detalle" cuyo objetivo es mandar al organizador a una nueva pagina llamada detalle evento en la cual haya una descripción del evento que se quiere ver y ademas una descripcion de los usuarios inscriptos a dicho evento en forma de tabla. El organizador en dicha tabla de usuarios puede indicar si dicho usuario pago y asistio al evento (puede guardar cambios de dichas variables que son 0 (no asistio/pago) o 1 (si asistio/pago).
 Actualmente estoy trabajando sobre las funcionalidades editar evento por parte del organizador. 
 quiero que juntos programemos esta funcionalidad para lograr concretarla en base al codigo que yo te voy a proporcionar de detalleEvento.php en el siguiente prompt, de acuerdo?
+
+
+
+Bien, 
+ahora me gustaria implementar que en la lista de usuarios inscriptos una vez que se muestra la informacion de un usario que ya fue 
+aceptado por el organizador aparezca un botoncito de cancelar inscripcion del usuario que si el organizador la presiona se le exiga una
+ confirmacion y si confirma cambie el estado nuevamente de activo de la inscripcion de 1 a 0. Solo se puede cancelar la inscripcion si el estado de asistio y pago son iguales a 0
+

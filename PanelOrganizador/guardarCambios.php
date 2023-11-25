@@ -7,7 +7,6 @@ if (!isset($_SESSION['esAdmin']) || $_SESSION['esAdmin'] != 1) {
     exit;
 }
 
-
 if (isset($_POST['guardarCambios'])) {
     // Asegúrate de que IDeventos provenga del formulario (no del parámetro GET)
     if (isset($_POST['IDeventos'])) {
@@ -37,6 +36,10 @@ if (isset($_POST['guardarCambios'])) {
             $queryUpdateAsistio = "UPDATE inscripciones SET asistio = 1 WHERE IDusuario = '$userID' AND IDeventos = '$IDeventos'";
             $connection->query($queryUpdateAsistio);
         }
+    } else {
+        // Si ninguna casilla de asistio está marcada, desmarcar todas las asistencias
+        $queryUpdateAsistio = "UPDATE inscripciones SET asistio = 0 WHERE IDeventos = '$IDeventos'";
+        $connection->query($queryUpdateAsistio);
     }
 
     if (isset($_POST['pago'])) {
@@ -45,6 +48,10 @@ if (isset($_POST['guardarCambios'])) {
             $queryUpdatePago = "UPDATE inscripciones SET pago = 1 WHERE IDusuario = '$userID' AND IDeventos = '$IDeventos'";
             $connection->query($queryUpdatePago);
         }
+    } else {
+        // Si ninguna casilla de pago está marcada, desmarcar todos los pagos
+        $queryUpdatePago = "UPDATE inscripciones SET pago = 0 WHERE IDeventos = '$IDeventos'";
+        $connection->query($queryUpdatePago);
     }
 
     // Redirigir a la página de detalle del evento después de guardar cambios

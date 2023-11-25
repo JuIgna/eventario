@@ -42,7 +42,8 @@ if (isset($_GET['IDeventos'])) {
     $queryUsuariosInscritos = "SELECT u.IDusuario, u.nombre, u.apellido, u.email, u.celular, i.asistio, i.pago
     FROM usuarios u
     INNER JOIN inscripciones i ON u.IDusuario = i.IDusuario
-    AND i.IDeventos = '$IDeventos'";
+    AND i.IDeventos = '$IDeventos'
+    WHERE i.activo = 1";
 
     $resultUsuariosInscritos = $connection->query($queryUsuariosInscritos);
 
@@ -303,7 +304,7 @@ if (isset($_GET['IDeventos'])) {
                         <?php echo $accion; ?> Evento
                     </button>
 
-                    <!-- <button id="edit-event-button">Editar Evento</button>  codigo sin uso--> 
+                    <!-- <button id="edit-event-button">Editar Evento</button>  codigo sin uso-->
 
                     <button id="delete-event-button"
                         onclick="verificarYEliminarEvento(<?php echo $evento['activo']; ?>, <?php echo $IDeventos; ?>)">Eliminar
@@ -389,6 +390,81 @@ if (isset($_GET['IDeventos'])) {
         </script>
 
         <section>
+            <!-- Lista de Usuarios Preinscritos -->
+            <h2>Usuarios Preinscritos</h2>
+            <table>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Email</th>
+                    <th>Aceptar Inscripción</th>
+                </tr>
+                <?php
+                // Consulta para obtener la lista de usuarios preinscritos
+                $queryUsuariosPreinscritos = "SELECT u.IDusuario, u.nombre, u.apellido, u.email
+            FROM usuarios u
+            INNER JOIN inscripciones i ON u.IDusuario = i.IDusuario
+            AND i.IDeventos = '$IDeventos'
+            WHERE i.activo = 0";
+
+                $resultUsuariosPreinscritos = $connection->query($queryUsuariosPreinscritos);
+
+                if ($resultUsuariosPreinscritos) {
+                    while ($usuarioPreinscrito = $resultUsuariosPreinscritos->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . $usuarioPreinscrito['nombre'] . "</td>";
+                        echo "<td>" . $usuarioPreinscrito['apellido'] . "</td>";
+                        echo "<td>" . $usuarioPreinscrito['email'] . "</td>";
+                        echo "<td>";
+                        echo "<button onclick='aceptarInscripcion(" . $usuarioPreinscrito['IDusuario'] . ")'>Aceptar Inscripción</button>";
+                        echo "</td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "Error al obtener la lista de usuarios preinscritos.";
+                    echo "Error en la consulta de usuarios preinscritos: " . $connection->error;
+                }
+                ?>
+            </table>
+        </section>
+
+        <script>
+            function aceptarInscripcion(IDusuario) {
+                // Puedes mostrar un mensaje de confirmación si lo deseas
+                Swal.fire({
+                    icon: 'warning',
+                    title: '¿Aceptar inscripción?',
+                    text: '¿Deseas aceptar la inscripción de este usuario?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, aceptar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Realiza la aceptación de la inscripción
+                        $.ajax({
+                            type: "POST",
+                            url: "aceptarInscripcion.php", // Crea un archivo PHP para manejar esta acción
+                            data: { IDusuario: IDusuario, IDeventos: <?php echo $IDeventos; ?> },
+                            success: function (response) {
+                                // Puedes mostrar un mensaje de éxito si lo deseas
+                                // alert(response);
+                                // Recarga la página para reflejar los cambios
+                                location.reload();
+                            },
+                            error: function (error) {
+                                // Maneja errores aquí si es necesario
+                                alert("Error: " + error);
+                            }
+                        });
+                    }
+                });
+            }
+        </script>
+
+
+
+
+        <section>
             <!-- Lista de Usuarios Inscritos -->
             <h2>Descripción de los Usuarios Inscritos</h2>
             <form action="guardarCambios.php" method="post">
@@ -400,6 +476,7 @@ if (isset($_GET['IDeventos'])) {
                         <th>Celular</th>
                         <th>Asistió</th>
                         <th>Pago</th>
+                        <th>Acciones</th> <!-- Nueva columna para los botones -->
                     </tr>
                     <?php
                     while ($usuario = $resultUsuariosInscritos->fetch_assoc()) {
@@ -414,6 +491,15 @@ if (isset($_GET['IDeventos'])) {
                         echo "<td>";
                         echo "<input type='checkbox' name='pago[]' value='" . $usuario['IDusuario'] . "' " . ($usuario['pago'] ? 'checked' : '') . ">";
                         echo "</td>";
+                        echo "<td>";
+
+                        // Solo muestra el botón de cancelar inscripción si ambos checkbox están desmarcados
+                        if ($usuario['asistio'] == 0 && $usuario['pago'] == 0) {
+                            echo "<button type='button' onclick='cancelarInscripcion(" . $usuario['IDusuario'] . ")'>Cancelar Inscripción</button>";
+                        } 
+                           
+                    
+                        echo "</td>";
                         echo "</tr>";
                     }
                     ?>
@@ -423,6 +509,37 @@ if (isset($_GET['IDeventos'])) {
                 <input type="hidden" name="IDeventos" value="<?php echo $IDeventos; ?>">
             </form>
         </section>
+        <script>
+            function cancelarInscripcion(IDusuario) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '¿Cancelar inscripción?',
+                    text: '¿Deseas cancelar la inscripción de este usuario?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, cancelar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Realiza la cancelación de la inscripción
+                        $.ajax({
+                            type: "POST",
+                            url: "cancelarInscripcion.php", // Asegúrate de crear este archivo PHP para manejar la acción
+                            data: { IDusuario: IDusuario, IDeventos: <?php echo $IDeventos; ?> },
+                            success: function (response) {
+                                // Puedes mostrar un mensaje de éxito si lo deseas
+                                //alert(response);
+                                // Recarga la página para reflejar los cambios
+                                location.reload();
+                            },
+                            error: function (error) {
+                                // Maneja errores aquí si es necesario
+                                alert("Error: " + error);
+                            }
+                        });
+                    }
+                });
+            }
+        </script>
     </main>
 
 </body>
