@@ -31,7 +31,7 @@ session_start();
     $username = "eventario_juan"; // Cambiar por tu nombre de usuario de la base de datos
     $password = "juan$2023"; // Cambiar por tu contraseña de la base de datos
     $database = "eventario_db"; // Cambiar por el nombre de tu base de datos
-
+    
     // Crear la conexión a la base de datos
     $connection = new mysqli($host, $username, $password, $database);
 
@@ -64,7 +64,7 @@ session_start();
     <h2 class="title-eventos">Listado de Eventos</h2>
     <section>
       <h3 class="title-proximos-eventos">Próximos eventos</h3>
-      
+
       <!-- Mostrar listado de eventos -->
       <ul id="event-list">
         <?php
@@ -102,6 +102,8 @@ session_start();
             $cant_inscripciones = $row['limite_inscritos'];
 
 
+
+
             // Consultar la cantidad de inscripciones realizadas
             $inscripcionesQuery = "SELECT COUNT(*) AS cantidad FROM inscripciones WHERE IDeventos = '$IDevento'";
             $inscripcionesResult = $connection->query($inscripcionesQuery);
@@ -122,6 +124,9 @@ session_start();
 
             // Verificar si el usuario está inscrito en el evento actual
             $inscrito = false; // Variable para almacenar el estado de inscripción
+            $activo = 0; // Variable para almacenar el estado activo de la inscripción
+        
+
             if (isset($_SESSION['username']) && isset($_SESSION['IDusuario'])) {
               $userID = $_SESSION['IDusuario'];
 
@@ -130,7 +135,17 @@ session_start();
               $inscripcionResult = $connection->query($inscripcionQuery);
 
               if ($inscripcionResult->num_rows > 0) {
+                $inscripcionData = $inscripcionResult->fetch_assoc();
                 $inscrito = true;
+                $activo = $inscripcionData['activo'];
+              }
+            }
+
+            if ($inscrito) {
+              if ($activo == 0) {
+                echo "<p>Estás preinscrito al evento, esperando la aceptación del organizador</p>";
+              } else {
+                echo "<p>Estás inscrito al evento</p>";
               }
             }
             ?>
@@ -186,12 +201,18 @@ session_start();
                       <button type="submit" class="register-button">Registrarse</button>
                     </form>
                   <?php } else if ($inscrito) { ?>
-                    <form action="cancelarRegistro.php" method="POST">
-                      <input type="hidden" name="IDeventos" value="<?php echo $IDevento; ?>">
-                      <button type="submit" class="cancel-button">Cancelar Registro</button>
-                    </form>
+                          <?php if ($activo == 1) {
+                            // Usuario inscrito y aceptado, no mostrar botón de cancelar
+                            echo "<p>No puedes cancelar tu inscripción, ya has sido aceptado en el evento.</p>";
+                          } else { ?>
+                        <form action="cancelarRegistro.php" method="POST">
+                          <input type="hidden" name="IDeventos" value="<?php echo $IDevento; ?>">
+                          <button type="submit" class="cancel-button">Cancelar Registro</button>
+                        </form>
+
+                    <?php } ?>
                   <?php } else if (!$evento_terminado && isset($_SESSION['username']) && $cantidadRestante <= 0) { ?>
-                    <p>El evento ha alcanzado el límite de inscripciones.</p>
+                        <p>El evento ha alcanzado el límite de inscripciones.</p>
                   <?php } ?>
 
                 </div>
