@@ -1,3 +1,4 @@
+/*
 document.addEventListener('DOMContentLoaded', function() {
     const editEventButton = document.getElementById('edit-event-button');
     const deleteEventButton = document.getElementById('delete-event-button');
@@ -13,3 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Redirige o realiza otras acciones necesarias
     });
 });
+*/
+
+
+
+

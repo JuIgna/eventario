@@ -55,3 +55,8 @@ ahora me gustaria implementar que en la lista de usuarios inscriptos una vez que
 aceptado por el organizador aparezca un botoncito de cancelar inscripcion del usuario que si el organizador la presiona se le exiga una
  confirmacion y si confirma cambie el estado nuevamente de activo de la inscripcion de 1 a 0. Solo se puede cancelar la inscripcion si el estado de asistio y pago son iguales a 0
 
+
+
+**** Detalle Evento ****
+este es mi codigo de detalleEvento.php en el cual un organizador ve en detalle la informacion de un evento, puede activar, modificar o eliminar el evento, ademas se puede consultar la lista de preinscriptos (aceptar solicitudes de inscripcion)  y lista de inscriptos (indicar si asistio o pago)
+Quiero que me digas como puedo optimizar este codigo, si puedo separar el javascript en otro archivo y como puedo hacerlo porque son muchas lineas

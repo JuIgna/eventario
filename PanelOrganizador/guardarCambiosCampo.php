@@ -29,10 +29,13 @@
         $stmt->bind_param("si", $editedValue, $eventId);
     
         // Debugging: Imprime la consulta SQL
-        echo "SQL: " . $stmt->sql . "<br>";
-    
+        // echo "SQL: " . $stmt->sql . "<br>";
+        echo "SQL: " . $stmt->sqlstate . "<br>";
+        
+
         if ($stmt->execute()) {
-            echo "success"; // Envía una respuesta de éxito
+            //echo "success"; // Envía una respuesta de éxito
+            echo $editedValue;
         } else {
             echo "error: " . $stmt->error; // Envía una respuesta de error y muestra el mensaje de error
         }

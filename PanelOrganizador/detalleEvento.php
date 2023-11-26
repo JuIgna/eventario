@@ -77,6 +77,7 @@ if (isset($_GET['IDeventos'])) {
     <script src="scripts/detalleEvento.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -87,23 +88,62 @@ if (isset($_GET['IDeventos'])) {
                 var eventID = $(this).data("eventid");
                 var nuevoValor = $(this).data("nuevo-valor");
 
-                $.ajax({
-                    type: "POST",
-                    url: "toggleEvento.php", // Crea un archivo PHP para manejar esta acción
-                    data: { eventID: eventID, nuevoValor: nuevoValor },
-                    success: function (response) {
-                        // Puedes mostrar una confirmación si lo deseas
-                        alert(response);
-                        // Recarga la página para reflejar los cambios
-                        location.reload();
-                    },
-                    error: function (error) {
-                        // Maneja errores aquí si es necesario
-                        alert("Error: " + error);
-                    }
-                });
+                // Verificar si se está desactivando el evento
+                if (nuevoValor === 0) {
+                    // Realizar una verificación adicional antes de desactivar el evento
+                    $.ajax({
+                        type: "POST",
+                        url: "verificarInscripciones.php",
+                        data: { eventID: eventID },
+                        success: function (response) {
+                            if (response === "inscripciones") {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'No se puede desactivar',
+                                    text: 'No se puede desactivar un evento con inscriptos.'
+                                });
+                            } else {
+                                mostrarConfirmacionDesactivar(eventID, nuevoValor);
+                            }
+                        },
+                        error: function (error) {
+                            alert("Error: " + error);
+                        }
+                    });
+                } else {
+                    // Si no se está desactivando, mostrar la confirmación directamente
+                    mostrarConfirmacionDesactivar(eventID, nuevoValor);
+                }
             });
         });
+
+        function mostrarConfirmacionDesactivar(eventID, nuevoValor) {
+            // Mostrar la confirmación antes de realizar la acción
+            Swal.fire({
+                icon: 'warning',
+                title: '¿Estás seguro?',
+                text: '¿Deseas ' + (nuevoValor ? 'activar' : 'desactivar') + ' este evento?',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, ' + (nuevoValor ? 'activar' : 'desactivar'),
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Realizar la activación/desactivación del evento
+                    $.ajax({
+                        type: "POST",
+                        url: "toggleEvento.php",
+                        data: { eventID: eventID, nuevoValor: nuevoValor },
+                        success: function (response) {
+                            alert(response); // Puedes mostrar un mensaje de éxito si lo deseas
+                            location.reload(); // Recarga la página para reflejar los cambios
+                        },
+                        error: function (error) {
+                            alert("Error: " + error);
+                        }
+                    });
+                }
+            });
+        }
     </script>
 
     <script>
@@ -353,7 +393,6 @@ if (isset($_GET['IDeventos'])) {
                 const fieldsToEdit = ["evento-evento", "fecha-evento", "lugar-evento", "descripcion-evento", "hora-evento", "hora_fin-evento", "limite_inscritos-evento"];
 
                 fieldsToEdit.forEach(function (fieldId) {
-                    console.log(fieldId);
                     const editButton = document.getElementById("edit-" + fieldId + "-button");
                     const saveButton = document.getElementById("save-" + fieldId + "-button");
 
@@ -366,27 +405,33 @@ if (isset($_GET['IDeventos'])) {
                         const fieldToUpdate = fieldId.replace("-evento", ""); // Quita el sufijo "-evento" para obtener el nombre del campo en la base de datos
                         const eventId = <?php echo $IDeventos; ?>;
 
-                        const xhr = new XMLHttpRequest();
-                        xhr.open("POST", "guardarCambiosCampo.php", true);
-                        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                        xhr.onreadystatechange = function () {
-                            if (xhr.readyState === 4) {
-                                if (xhr.status === 200) {
-                                    if (xhr.responseText === "success") {
-                                        // La actualización fue exitosa
-                                        document.getElementById(fieldId + "-text").textContent = editedValue; // Actualiza el valor en tiempo real
-                                        toggleEditMode(fieldId); // Restaura el campo al estado normal
-                                    } else {
-                                        // Ocurrió un error durante la actualización, maneja el error si es necesario
-                                    }
+                        $.ajax({
+                            type: "POST",
+                            url: "guardarCambiosCampo.php",
+                            data: {
+                                fieldToUpdate: fieldToUpdate,
+                                editedValue: editedValue,
+                                eventId: eventId
+                            },
+                            success: function (response) {
+                                if (response !== "error") {
+                                    // La actualización fue exitosa
+                                    document.getElementById(fieldId + "-text").textContent = editedValue; // Actualiza el valor en tiempo real con el nuevo valor editado
+                                    toggleEditMode(fieldId); // Restaura el campo al estado normal
+                                } else {
+                                    // Ocurrió un error durante la actualización, maneja el error si es necesario
+                                    alert("Error durante la actualización: " + response);
                                 }
+                            },
+                            error: function (error) {
+                                // Maneja errores aquí si es necesario
+                                alert("Error: " + error);
                             }
-                        };
-
-                        xhr.send("fieldToUpdate=" + fieldToUpdate + "&editedValue=" + editedValue + "&eventId=" + eventId);
+                        });
                     });
                 });
             });
+
         </script>
 
         <section>
@@ -496,9 +541,9 @@ if (isset($_GET['IDeventos'])) {
                         // Solo muestra el botón de cancelar inscripción si ambos checkbox están desmarcados
                         if ($usuario['asistio'] == 0 && $usuario['pago'] == 0) {
                             echo "<button type='button' onclick='cancelarInscripcion(" . $usuario['IDusuario'] . ")'>Cancelar Inscripción</button>";
-                        } 
-                           
-                    
+                        }
+
+
                         echo "</td>";
                         echo "</tr>";
                     }
