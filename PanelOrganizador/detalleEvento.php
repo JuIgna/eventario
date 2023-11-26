@@ -87,23 +87,62 @@ if (isset($_GET['IDeventos'])) {
                 var eventID = $(this).data("eventid");
                 var nuevoValor = $(this).data("nuevo-valor");
 
-                $.ajax({
-                    type: "POST",
-                    url: "toggleEvento.php", // Crea un archivo PHP para manejar esta acción
-                    data: { eventID: eventID, nuevoValor: nuevoValor },
-                    success: function (response) {
-                        // Puedes mostrar una confirmación si lo deseas
-                        alert(response);
-                        // Recarga la página para reflejar los cambios
-                        location.reload();
-                    },
-                    error: function (error) {
-                        // Maneja errores aquí si es necesario
-                        alert("Error: " + error);
-                    }
-                });
+                // Verificar si se está desactivando el evento
+                if (nuevoValor === 0) {
+                    // Realizar una verificación adicional antes de desactivar el evento
+                    $.ajax({
+                        type: "POST",
+                        url: "verificarInscripciones.php",
+                        data: { eventID: eventID },
+                        success: function (response) {
+                            if (response === "inscripciones") {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'No se puede desactivar',
+                                    text: 'No se puede desactivar un evento con inscriptos.'
+                                });
+                            } else {
+                                mostrarConfirmacionDesactivar(eventID, nuevoValor);
+                            }
+                        },
+                        error: function (error) {
+                            alert("Error: " + error);
+                        }
+                    });
+                } else {
+                    // Si no se está desactivando, mostrar la confirmación directamente
+                    mostrarConfirmacionDesactivar(eventID, nuevoValor);
+                }
             });
         });
+
+        function mostrarConfirmacionDesactivar(eventID, nuevoValor) {
+            // Mostrar la confirmación antes de realizar la acción
+            Swal.fire({
+                icon: 'warning',
+                title: '¿Estás seguro?',
+                text: '¿Deseas ' + (nuevoValor ? 'activar' : 'desactivar') + ' este evento?',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, ' + (nuevoValor ? 'activar' : 'desactivar'),
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Realizar la activación/desactivación del evento
+                    $.ajax({
+                        type: "POST",
+                        url: "toggleEvento.php",
+                        data: { eventID: eventID, nuevoValor: nuevoValor },
+                        success: function (response) {
+                            alert(response); // Puedes mostrar un mensaje de éxito si lo deseas
+                            location.reload(); // Recarga la página para reflejar los cambios
+                        },
+                        error: function (error) {
+                            alert("Error: " + error);
+                        }
+                    });
+                }
+            });
+        }
     </script>
 
     <script>
@@ -496,9 +535,9 @@ if (isset($_GET['IDeventos'])) {
                         // Solo muestra el botón de cancelar inscripción si ambos checkbox están desmarcados
                         if ($usuario['asistio'] == 0 && $usuario['pago'] == 0) {
                             echo "<button type='button' onclick='cancelarInscripcion(" . $usuario['IDusuario'] . ")'>Cancelar Inscripción</button>";
-                        } 
-                           
-                    
+                        }
+
+
                         echo "</td>";
                         echo "</tr>";
                     }
