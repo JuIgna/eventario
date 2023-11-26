@@ -16,6 +16,26 @@ session_start();
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.min.js"></script>
 </head>
 
+<script>
+  function confirmarAccion(accion, evento, form) {
+    Swal.fire({
+      title: `¿Estás seguro de que deseas ${accion} en el evento "${evento}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, estoy seguro',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        form.submit(); // Si el usuario confirma, se envía el formulario
+      }
+    });
+    return false; // Detener la presentación del formulario directamente
+  }
+</script>
+
+
 <body>
   <header>
     <h1><a href="../index.html" class="logo-link"> Eventario </a> </h1>
@@ -75,12 +95,14 @@ session_start();
 
         // Verificar si se ha establecido el parámetro 'inscripcion'
         if (isset($_GET['inscripcion']) && $_GET['inscripcion'] === 'exitosa') {
-          echo "<script>alert('Usuario inscrito correctamente.');</script>";
+          echo "<script>alert('Te has inscrpito correctamente.');</script>";
+          header("Location: listaEventos.php");
         }
 
         // Verificar si se ha establecido el parámetro 'cancelacion'
         if (isset($_GET['cancelacion']) && $_GET['cancelacion'] === 'exitosa') {
           echo "<script>alert('Registro cancelado correctamente.');</script>";
+          header("Location: listaEventos.php");
         }
 
         // Consulta para obtener los eventos de la base de datos
@@ -196,16 +218,16 @@ session_start();
 
 
                   <?php if (!$evento_terminado && !$inscrito && isset($_SESSION['username']) && $cantidadRestante > 0 && $valorEsAdmin == 0) { ?>
-                    <form action="inscribirEvento.php" method="POST">
+                    <form action="inscribirEvento.php" method="POST" onsubmit="return confirmarAccion('registrarte', '<?php echo $evento; ?>', this);">
                       <input type="hidden" name="IDeventos" value="<?php echo $IDevento; ?>">
                       <button type="submit" class="register-button">Registrarse</button>
                     </form>
                   <?php } else if ($inscrito) { ?>
-                          <?php if ($activo == 1) {
-                            // Usuario inscrito y aceptado, no mostrar botón de cancelar
-                            echo "<p>No puedes cancelar tu inscripción, ya has sido aceptado en el evento.</p>";
-                          } else { ?>
-                        <form action="cancelarRegistro.php" method="POST">
+                    <?php if ($activo == 1) {
+                      // Usuario inscrito y aceptado, no mostrar botón de cancelar
+                      echo "<p>No puedes cancelar tu inscripción, ya has sido aceptado en el evento.</p>";
+                    } else { ?>
+                        <form action="cancelarRegistro.php" method="POST" onsubmit="return confirmarAccion('cancelar tu registro', '<?php echo $evento; ?>', this);">
                           <input type="hidden" name="IDeventos" value="<?php echo $IDevento; ?>">
                           <button type="submit" class="cancel-button">Cancelar Registro</button>
                         </form>
