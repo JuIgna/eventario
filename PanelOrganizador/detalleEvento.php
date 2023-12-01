@@ -405,6 +405,27 @@ if (isset($_GET['IDeventos'])) {
                         const fieldToUpdate = fieldId.replace("-evento", ""); // Quita el sufijo "-evento" para obtener el nombre del campo en la base de datos
                         const eventId = <?php echo $IDeventos; ?>;
 
+                        if (fieldToUpdate === "fecha" && editedValue === "") {
+
+                            if (editedValue === "") {
+                                // Si la fecha es vacía, no realiza la actualización y sale del evento de guardar
+                                toggleEditMode(fieldId); // Restaura el campo al estado normal
+                                return;
+                            }
+                        }
+
+                        if (fieldToUpdate === "fecha") {
+                            // Verifica si la fecha ingresada es anterior a la fecha actual
+                            const currentDate = new Date();
+                            const selectedDate = new Date(editedValue);
+
+                            if (selectedDate < currentDate) {
+                                // Muestra un mensaje de error
+                                alert("La fecha debe ser posterior a la fecha actual.");
+                                return;
+                            }
+                        }
+
                         $.ajax({
                             type: "POST",
                             url: "guardarCambiosCampo.php",
