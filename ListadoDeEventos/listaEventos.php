@@ -14,6 +14,8 @@ session_start();
   <script src="scriptEventos.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.min.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
 </head>
 
 <script>
@@ -37,6 +39,27 @@ session_start();
 
 
 <body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="../index.html">Eventario</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+        aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarScroll">
+        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+          <li class="nav-item">
+            <a class="nav-link" href="../index.html">Volver a inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../ListadoDeEventos/listaEventos.php">Listado de Eventos</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
   <header>
     <h1><a href="../index.html" class="logo-link"> Eventario </a> </h1>
 
@@ -64,8 +87,8 @@ session_start();
     if (isset($_SESSION['username'])) {
       // El usuario ha iniciado sesión, puedes acceder a la variable de sesión
       $username = $_SESSION['username'];
-      $valorEsAdmin = $_SESSION['esAdmin'];
-
+      //$valorEsAdmin = $_SESSION['esAdmin'];
+    
 
       echo "<div class='button-container'>";
       echo "<a id='my-buttons' href='misEventos.php'>Mis eventos</a>";
@@ -218,7 +241,8 @@ session_start();
 
 
                   <?php if (!$evento_terminado && !$inscrito && isset($_SESSION['username']) && $cantidadRestante > 0 && $valorEsAdmin == 0) { ?>
-                    <form action="inscribirEvento.php" method="POST" onsubmit="return confirmarAccion('registrarte', '<?php echo $evento; ?>', this);">
+                    <form action="inscribirEvento.php" method="POST"
+                      onsubmit="return confirmarAccion('registrarte', '<?php echo $evento; ?>', this);">
                       <input type="hidden" name="IDeventos" value="<?php echo $IDevento; ?>">
                       <button type="submit" class="register-button">Registrarse</button>
                     </form>
@@ -227,7 +251,8 @@ session_start();
                       // Usuario inscrito y aceptado, no mostrar botón de cancelar
                       echo "<p>No puedes cancelar tu inscripción, ya has sido aceptado en el evento.</p>";
                     } else { ?>
-                        <form action="cancelarRegistro.php" method="POST" onsubmit="return confirmarAccion('cancelar tu registro', '<?php echo $evento; ?>', this);">
+                        <form action="cancelarRegistro.php" method="POST"
+                          onsubmit="return confirmarAccion('cancelar tu registro', '<?php echo $evento; ?>', this);">
                           <input type="hidden" name="IDeventos" value="<?php echo $IDevento; ?>">
                           <button type="submit" class="cancel-button">Cancelar Registro</button>
                         </form>
