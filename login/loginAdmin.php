@@ -7,7 +7,7 @@ session_start();
 
 <head>
   <meta charset="utf-8">
-  <title>Iniciar sesión - Eventario</title>
+  <title>Iniciar sesión como Administrador - Eventario</title>
   <link rel="stylesheet" type="text/css" href="css/styles.css">
   <script src="script.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -42,8 +42,8 @@ session_start();
   <main>
 
     <section>
-      <form class="form-signin" action="login.php" method="POST">
-        <h2 class="text-center mb-4">Iniciar sesión</h2>
+      <form class="form-signin" action="loginAdmin.php" method="POST">
+        <h2 class="text-center mb-4">Iniciar sesión como Administrador</h2>
         <div class="form-floating mb-3">
           <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
           <label for="email">Email:</label>
@@ -52,7 +52,7 @@ session_start();
           <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
           <label for="password">Contraseña:</label>
         </div>
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Iniciar sesión</button>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Iniciar sesión como Administrador</button>
         <a href="registro.php" class="mt-3 d-block text-center">Registrarse</a>
       </form>
     </section>
@@ -62,8 +62,6 @@ session_start();
 </body>
 
 </html>
-
-
 
 <?php
 // Establecer la conexión con la base de datos
@@ -85,8 +83,8 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
   $email = $_POST['email'];
   $contrasena = $_POST['password'];
 
-  // Siempre buscar en la tabla "Usuarios"
-  $sql = "SELECT * FROM usuarios WHERE email = ? AND contrasena = ?";
+  // Siempre buscar en la tabla "Organizador" para login de administradores
+  $sql = "SELECT * FROM organizador WHERE correo = ? AND contrasena = ?";
 
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("ss", $email, $contrasena);
@@ -101,14 +99,15 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 
     // Guardar el nombre de usuario y el ID de usuario en la sesión 
     $_SESSION['username'] = $row['nombre'];
-    $_SESSION['IDusuario'] = $row['IDusuario'];
+    $_SESSION['IDorganizador'] = $row['IDorganizador'];
+    $_SESSION['esAdmin'] = true; // Establecer la variable de sesión "esAdmin"
 
     // Redirigir al usuario a la página de inicio o realizar otras acciones necesarias
-    header('Location: ../ListadoDeEventos/listaEventos.php');
+    header('Location: ../PanelOrganizador/panel.php');
     exit(); // Asegurar que el script se detenga después de la redirección
   } else {
     // Credenciales incorrectas
-    $_SESSION['message'] = "Email o contraseña incorrectos";
+    $_SESSION['message'] = "Email o contraseña incorrectos para Administrador";
   }
 }
 
