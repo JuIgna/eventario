@@ -1,3 +1,19 @@
+******************** Instalar Pruebas de forma local usando XAMPP ****************************************
+1- Instalar XAMPP
+2- Descargar el repositorio de Eventario en Github
+3- Colocar la carpeta del proyecto eventario en la carpeta htdocs en XAMPP
+4- Abrir XAMPP y ejecutar los servicios de Apache y MySQL
+5- Crear la base de datos "eventario_db" en el phpmyadmin
+6- Crear el usuario que va a acceder a la base de datos con todos los privilegios. Usuario "eventario_juan", contraseña "juan$2023"
+7- Importar el archivo "eventario_db.sql" (tiene todas las tablas con toda la informacion almacenada) a la base de datos "eventario_db" 
+desde el phpmyadmin
+
+
+
+********************************** Instalar en produccion CPanel ********************************************************
+
+
+
 **************** Contexto de eventario: **********************
 estoy desarrollando una pagina llamado "eventario" en la cual hay eventos que son creados por organizadores, 
 y los usuarios son capaces de inscribirse a los mismos, actualmente estoy programando funcionalidades dentro del panel del 

@@ -1,3 +1,12 @@
+******* Tareas restantes ******************
+1- login y registro - Añadir boostrap y mejorar los campos de contraseña añadiendo mayor seguridad.
+2- lista de eventos - Añadir bootsrap que mejoren el apartado visual
+3- Panel de usuario - actualmente solo muestra los eventos inscriptos del usuario, agregar sus datos personales y modificarlo si quiere
+4- Implementar AdminLTE para el panel organizador
+5- Implementar Google Calendar API en el panel de usuario para que un usuario pueda añadir su evento inscripto al calendario
+
+
+
 **** Librerias
 
 lte admin 
