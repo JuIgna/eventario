@@ -84,7 +84,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
   $contrasena = $_POST['password'];
 
   // Siempre buscar en la tabla "Organizador" para login de administradores
-  $sql = "SELECT * FROM organizador WHERE correo = ? AND contrasena = ?";
+  $sql = "SELECT * FROM administrador WHERE correo = ? AND contrasena = ?";
 
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("ss", $email, $contrasena);
@@ -99,7 +99,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 
     // Guardar el nombre de usuario y el ID de usuario en la sesión 
     $_SESSION['username'] = $row['nombre'];
-    $_SESSION['IDorganizador'] = $row['IDorganizador'];
+    $_SESSION['IDadministrador'] = $row['IDadministrador'];
     $_SESSION['esAdmin'] = true; // Establecer la variable de sesión "esAdmin"
 
     // Redirigir al usuario a la página de inicio o realizar otras acciones necesarias

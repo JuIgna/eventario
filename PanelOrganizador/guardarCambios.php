@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-// Verificar si el usuario ha iniciado sesión como organizador
+// Verificar si el usuario ha iniciado sesión como administrador
 if (!isset($_SESSION['esAdmin']) || $_SESSION['esAdmin'] != 1) {
-    echo "<script>alert('Debes iniciar sesión como organizador.'); window.location.href = '../login/login.php';</script>";
+    echo "<script>alert('Debes iniciar sesión como administrador.'); window.location.href = '../login/login.php';</script>";
     exit;
 }
 

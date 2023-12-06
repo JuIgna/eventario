@@ -5,9 +5,8 @@ session_start()
 
 <!DOCTYPE html>
 <!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
-Archivo plantilla, compartida para mostrar el sidebar, navbar, en la parte central esta lo
+Archivo plantilla base, compartida para mostrar el sidebar, navbar.
+En la parte central esta lo dinamico que cambiara con cada funcionalidad.
 -->
 <html lang="es">
 
@@ -72,9 +71,7 @@ Archivo plantilla, compartida para mostrar el sidebar, navbar, en la parte centr
 
 </body>
 
-<!-- REQUIRED SCRIPTS -->
 
-<!-- jQuery -->
 <?php
 // Configuración de la conexión a la base de datos
 $host = "localhost"; // Cambiar si es necesario
@@ -90,8 +87,17 @@ if ($connection->connect_error) {
   die("Error en la conexión a la base de datos: " . $connection->connect_error);
 }
 
-$IDorganizador = $_SESSION['IDorganizador']; // Obten el ID del organizador desde la sesión
+$IDadministrador = $_SESSION['IDadministrador']; // Obten el ID del organizador desde la sesión
 $IDeventos = null;
+
+if (isset($_SESSION['esAdmin']) && $_SESSION['esAdmin'] == 1) {
+
+
+
+
+} else {
+  echo "<script>alert('Debes iniciar sesión como administrador. Serás redirigido a la página de inicio de sesión para administradores.'); window.location.href = '../login/loginAdmin.php';</script>";
+}
 
 
 ?>

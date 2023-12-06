@@ -15,9 +15,9 @@ if ($connection->connect_error) {
     die("Error en la conexión a la base de datos: " . $connection->connect_error);
 }
 
-// Verificar si el usuario ha iniciado sesión como organizador
+// Verificar si el usuario ha iniciado sesión como administrador
 if (!isset($_SESSION['esAdmin']) || $_SESSION['esAdmin'] != 1) {
-    echo "Error: Debes iniciar sesión como organizador.";
+    echo "Error: Debes iniciar sesión como administrador.";
     exit;
 }
 

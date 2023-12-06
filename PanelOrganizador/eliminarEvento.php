@@ -20,11 +20,11 @@ if (isset($_POST['eventID'])) {
     // Comienza una transacción para asegurar la eliminación en ambas tablas
     $connection->begin_transaction();
     
-    // Intenta eliminar las entradas en 'eventosorganizador' relacionadas con el evento
-    $queryEliminarEventosOrganizador = "DELETE FROM eventosorganizador WHERE IDeventos = $IDeventos";
+    // Intenta eliminar las entradas en 'eventosadministrador' relacionadas con el evento
+    $queryEliminarEventosAdministrador = "DELETE FROM eventosadministrador WHERE IDeventos = $IDeventos";
     $queryEliminarEvento = "DELETE FROM eventos WHERE IDeventos = $IDeventos";
 
-    if ($connection->query($queryEliminarEventosOrganizador) === TRUE) {
+    if ($connection->query($queryEliminarEventosAdministrador) === TRUE) {
         // Ahora intenta eliminar el evento de la tabla 'eventos'
         if ($connection->query($queryEliminarEvento) === TRUE) {
             // Si ambas eliminaciones son exitosas, confirma la transacción
@@ -37,7 +37,7 @@ if (isset($_POST['eventID'])) {
             echo "error"; // Error en la eliminación
         }
     } else {
-        // Si hay un error al eliminar en 'eventosorganizador', revierte la transacción
+        // Si hay un error al eliminar en 'eventosadministrador', revierte la transacción
         $connection->rollback();
         echo "error"; // Error en la eliminación
     }
