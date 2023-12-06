@@ -103,7 +103,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     $_SESSION['esAdmin'] = true; // Establecer la variable de sesión "esAdmin"
 
     // Redirigir al usuario a la página de inicio o realizar otras acciones necesarias
-    header('Location: ../PanelOrganizador/panel.php');
+    header('Location: ../PanelOrganizador/panelAdmin.php');
     exit(); // Asegurar que el script se detenga después de la redirección
   } else {
     // Credenciales incorrectas
