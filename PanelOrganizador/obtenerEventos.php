@@ -15,13 +15,13 @@ if (isset($_SESSION['esAdmin']) && $_SESSION['esAdmin'] == 1) {
     die("Error en la conexión a la base de datos: " . $conn->connect_error);
   }
 
-  $IDorganizador = $_SESSION['IDorganizador'];
+  $IDadministrador = $_SESSION['IDadministrador'];
 
-  // Consulta para obtener los eventos del organizador
+  // Consulta para obtener los eventos del administrador
   $query = "SELECT e.IDeventos, e.evento, e.fecha, e.lugar, e.descripcion, e.hora, e.hora_fin, e.limite_inscritos, e.imagen
             FROM eventos AS e
-            INNER JOIN eventosorganizador AS eo ON e.IDeventos = eo.IDeventos
-            WHERE eo.IDorganizador = $IDorganizador";
+            INNER JOIN eventosadministrador AS eo ON e.IDeventos = eo.IDeventos
+            WHERE eo.IDadministrador = $IDadministrador";
 
   $result = $conn->query($query);
 

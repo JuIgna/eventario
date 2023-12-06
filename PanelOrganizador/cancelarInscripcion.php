@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-// Verificar si el usuario ha iniciado sesión como organizador
+// Verificar si el usuario ha iniciado sesión como administrador
 if (!isset($_SESSION['esAdmin']) || $_SESSION['esAdmin'] != 1) {
-    echo json_encode(['status' => 'error', 'message' => 'Debes iniciar sesión como organizador.']);
+    echo json_encode(['status' => 'error', 'message' => 'Debes iniciar sesión como administrador.']);
     exit;
 }
 

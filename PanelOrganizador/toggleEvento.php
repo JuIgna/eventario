@@ -2,9 +2,9 @@
 // Configuración de la conexión a la base de datos (similar a tu archivo actual)
 session_start();
 
-// Verificar si el usuario ha iniciado sesión como organizador
+// Verificar si el usuario ha iniciado sesión como administrador
 if (!isset($_SESSION['esAdmin']) || $_SESSION['esAdmin'] != 1) {
-    echo "<script>alert('Debes iniciar sesión como organizador.'); window.location.href = '../login/login.php';</script>";
+    echo "<script>alert('Debes iniciar sesión como administrador.'); window.location.href = '../login/loginAdmin.php';</script>";
     exit;
 }
 
@@ -22,7 +22,7 @@ if (!isset($_SESSION['esAdmin']) || $_SESSION['esAdmin'] != 1) {
     if ($connection->connect_error) {
       die("Error en la conexión a la base de datos: " . $connection->connect_error);
     }
-    $IDorganizador = $_SESSION['IDorganizador']; // Obten el ID del organizador desde la sesión
+    $IDadministrador = $_SESSION['IDadministrador']; // Obten el ID del administrador desde la sesión
     
 
 

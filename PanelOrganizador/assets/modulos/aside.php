@@ -6,9 +6,11 @@
         <span class="brand-text font-weight-light">Eventario</span>
     </a>
 
+
+
     <!-- Sidebar -->
     <div class="sidebar">
-
+        
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
@@ -53,7 +55,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="cerrarSesion.php" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Cerrar Sesion

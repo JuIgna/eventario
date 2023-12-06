@@ -1,4 +1,6 @@
 Eventos: IDeventos (int), evento (varchar), fecha (date), lugar (varchar), imagen (varchar), descripcion(varchar), hora (time), limite_inscritos (int), hora_fin(time), activo (tinyint)
+
+
 Usuarios: IDusuario, nombre, email, contrasena, esAdmin, apellido, celular.
 Inscripciones: IDinscripcion, IDeventos, IDusuario, asistio, pago, activo :: tabla interseccion de eventos y usuarios, ver que usuarios se inscribieron a tal evento
 Organizador: IDorganizador, nombre, correo, contrasena, celular

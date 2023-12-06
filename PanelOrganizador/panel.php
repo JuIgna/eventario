@@ -37,7 +37,7 @@ session_start();
     if ($connection->connect_error) {
       die("Error en la conexión a la base de datos: " . $connection->connect_error);
     }
-    $IDorganizador = $_SESSION['IDorganizador']; // Obten el ID del organizador desde la sesión
+    $IDadministrador = $_SESSION['IDadministrador']; // Obten el ID del organizadministrador ador desde la sesión
     $IDeventos = null;
     
     echo "<div class='button-container'>";
@@ -51,7 +51,7 @@ session_start();
     <?php
     
     if (isset($_SESSION['esAdmin']) && $_SESSION['esAdmin'] == 1) {
-      // Si el usuario es un organizador, mostrar el botón para agregar eventos
+      // Si el usuario es un administrador, mostrar el botón para agregar eventos
       echo "<section>";
       echo "<button id='add-event-button' >Agregar Evento</button>";
       echo "<button id='view-events-button' >Ver mis eventos</button>";
@@ -108,7 +108,7 @@ session_start();
       echo "<script>
       document.getElementById('view-events-button').addEventListener('click', function() {
         
-        // Realiza una petición AJAX para obtener los eventos del organizador
+        // Realiza una petición AJAX para obtener los eventos del administrador
         const xhr = new XMLHttpRequest();
         xhr.open('GET', 'obtenerEventos.php', true);
         xhr.onreadystatechange = function() {
@@ -236,7 +236,7 @@ session_start();
         if ($connection->query($query) === true) {
           $IDeventos = $connection->insert_id;
 
-          $query = "INSERT INTO eventosorganizador (IDorganizador, IDeventos) VALUES ('$IDorganizador', '$IDeventos')";
+          $query = "INSERT INTO eventosadministrador (IDadministrador, IDeventos) VALUES ('$IDadministrador', '$IDeventos')";
 
           if ($connection->query($query) === true) {
             header("Location: panel.php");
@@ -247,7 +247,7 @@ session_start();
         }
       }
     } else {
-      echo "<script>alert('Debes iniciar sesión como organizador. Serás redirigido a la página de inicio de sesión.'); window.location.href = '../login/login.php';</script>";
+      echo "<script>alert('Debes iniciar sesión como administrador. Serás redirigido a la página de inicio de sesión.'); window.location.href = '../login/loginAdmin.php';</script>";
       // header ("Location: ../login/login.php");
     }
     ?>
