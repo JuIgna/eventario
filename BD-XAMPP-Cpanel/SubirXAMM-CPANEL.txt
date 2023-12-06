@@ -27,6 +27,12 @@ no detallado
 
 
 
+***************************************** Contexto de AdminLTE ****************************************************************************
+Bien, vamos a pasar a la implementacion. Yo actualmente tengo un panel administrador hecho en html, css, js, php pero ahora se me exige hacer un panel administrador usando AdminLTE. Mis funciones del panel administrador actual son:
+- Agregar evento
+- Consultar eventos creados
+- Ver detalle de un evento
+Esta es mi plantilla base de AdminLTE llamada panelAdmin.php:
 
 
 

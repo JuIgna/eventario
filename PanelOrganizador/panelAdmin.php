@@ -69,6 +69,7 @@ En la parte central esta lo dinamico que cambiara con cada funcionalidad.
 
   </script>
 
+
 </body>
 
 
