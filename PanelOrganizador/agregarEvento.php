@@ -70,6 +70,11 @@ if ($connection->connect_error) {
                                         <input type="text" class="form-control" id="descripcionEvento"
                                             name="descripcionEvento" required>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="organizadorEvento">Organizador del Evento</label>
+                                        <input type="text" class="form-control" id="organizadorEvento"
+                                            name="organizadorEvento" required>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <!-- Columna derecha -->

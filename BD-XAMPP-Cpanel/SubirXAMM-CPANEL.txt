@@ -34,6 +34,11 @@ Bien, vamos a pasar a la implementacion. Yo actualmente tengo un panel administr
 - Ver detalle de un evento
 Esta es mi plantilla base de AdminLTE llamada panelAdmin.php:
 
+Estoy trabajando sobre un proyecto web llamado eventario. Yo actualmente tengo un panel administrador hecho en html, css, js, php pero ahora se me exige hacer un panel administrador usando AdminLTE 3.2.0. Mis funciones del panel administrador actual son:
+- Agregar evento
+- Consultar eventos creados
+- Ver detalle de un evento
+Yo cree una plantilla base de AdminLTE llamada panelAdmin.php sobre la cual segun como se va haciendo click en el navbar o aside se cambia el contenido del centro, es decir del content-wrapper:
 
 
 

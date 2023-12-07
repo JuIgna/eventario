@@ -30,14 +30,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $imagenEvento = $_FILES["imagenEvento"]["name"];
     $imagenEventoTmp = $_FILES["imagenEvento"]["tmp_name"];
     $categoriaEvento = $_POST["categoriaEvento"];
+    $organizadorEvento = $_POST["organizadorEvento"];
 
     // Mover la imagen cargada al directorio deseado (ajusta la ruta según tu estructura de carpetas)
     $destination = "images/" . $imagenEvento;
     move_uploaded_file($imagenEventoTmp, $destination);
 
     // Insertar el evento en la base de datos
-    $query = "INSERT INTO eventos (evento, fecha, lugar, descripcion, hora, limite_inscritos, hora_fin, duracion, costo, imagen, IDcategoria)
-              VALUES ('$nombreEvento', '$fechaEvento', '$lugarEvento', '$descripcionEvento', '$horaInicio', '$limiteInscriptos', '$horaFin', '$duracionEvento', '$costoEvento', '$destination', '$categoriaEvento')";
+    $query = "INSERT INTO eventos (evento, fecha, lugar, descripcion, hora, limite_inscritos, hora_fin, duracion, costo, imagen, IDcategoria, organizador)
+              VALUES ('$nombreEvento', '$fechaEvento', '$lugarEvento', '$descripcionEvento', '$horaInicio', '$limiteInscriptos', '$horaFin', '$duracionEvento', '$costoEvento', '$destination', '$categoriaEvento','$organizadorEvento')";
 
     if ($connection->query($query) === true) {
         // Redirigir a la página de éxito o a donde sea necesario
