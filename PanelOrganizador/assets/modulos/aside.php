@@ -1,3 +1,7 @@
+<?php
+$nombreAdministrador = $_SESSION['username']
+?>
+
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
@@ -10,23 +14,36 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
-        
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="info">
+                <?php
+                if (isset($nombreAdministrador)) {
+                    echo "<a href='#' class='d-block'> Bienvenido, $nombreAdministrador </a>";
+                } else {
+                    echo "<a href='#' class='d-block'>Nombre no disponible</a>";
+                }
+                ?>
+            </div>
+        </div>
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu"
+                data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-               <li class="nav-item">
-                    <a style="cursor: pointer;" class="nav-link active" onclick="cargarContenido('dashboard.php', 'content-wrapper')">
+                <li class="nav-item">
+                    <a style="cursor: pointer;" class="nav-link active"
+                        onclick="cargarContenido('dashboard.php', 'content-wrapper')">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
-                            Dashboard   
+                            Dashboard
                         </p>
                     </a>
                 </li>
                 <li class="nav-item ">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <i class="nav-icon fas fa-calendar-alt"></i>
                         <p>
                             Eventos
                             <i class="right fas fa-angle-left"></i>
@@ -34,13 +51,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a style="cursor: pointer;" class="nav-link" onclick="cargarContenido('agregarEvento.php','content-wrapper')" >
+                            <a style="cursor: pointer;" class="nav-link"
+                                onclick="cargarContenido('agregarEvento.php','content-wrapper')">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Agregar Evento </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a style="cursor: pointer;" class="nav-link" onclick="cargarContenido('consultaEventos.php','content-wrapper')">
+                            <a style="cursor: pointer;" class="nav-link"
+                                onclick="cargarContenido('consultaEventos.php','content-wrapper')">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Consultar Eventos </p>
                             </a>
@@ -63,7 +82,7 @@
                     </a>
                 </li>
 
-                
+
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
@@ -73,9 +92,9 @@
 </aside>
 
 <script>
-    $(".nav-link").on('click', function(){
-        $(".nav-link").removeClass ('active');
-        $(this).addClass ('active');
+    $(".nav-link").on('click', function () {
+        $(".nav-link").removeClass('active');
+        $(this).addClass('active');
 
     })
 </script>

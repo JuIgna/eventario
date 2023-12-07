@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-12-2023 a las 20:04:56
+-- Tiempo de generación: 07-12-2023 a las 20:17:25
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -40,7 +40,7 @@ CREATE TABLE `administrador` (
 --
 
 INSERT INTO `administrador` (`IDadministrador`, `nombre`, `correo`, `contrasena`, `celular`) VALUES
-(1, 'UBP', 'ubp@gmail.com', 'ubp', '3571603501');
+(1, 'Juan Vazquez', 'juignavazquez@gmail.com', 'juigna123', '3571603501');
 
 -- --------------------------------------------------------
 
@@ -84,18 +84,22 @@ CREATE TABLE `eventos` (
   `Costo` float DEFAULT NULL,
   `FechaAlta` timestamp NOT NULL DEFAULT current_timestamp(),
   `IDcategoria` int(11) DEFAULT NULL,
-  `duracion` time DEFAULT NULL
+  `duracion` time DEFAULT NULL,
+  `organizador` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `eventos`
 --
 
-INSERT INTO `eventos` (`IDeventos`, `evento`, `fecha`, `lugar`, `imagen`, `descripcion`, `hora`, `limite_inscritos`, `hora_fin`, `activo`, `Costo`, `FechaAlta`, `IDcategoria`, `duracion`) VALUES
-(47, 'Semana TIC 2023 cba', '2023-12-10', 'Universidad Blas Sede Cordoba', 'images/semanatic.jpg', 'Disfruta del evento tecnologico del año de la mano de grandes oradores!', '09:00:00', 500, '21:00:00', 1, NULL, '2023-12-06 16:04:46', NULL, NULL),
-(48, 'Maraton San Agustin', '2023-12-10', 'Plaza 25 de Mayo, San Agustin, Cordoba', 'images/maraonSanAgustin.jpeg', 'El municipio de San Agusitn realiza una maraton!', '10:00:00', 200, '12:30:00', 1, NULL, '2023-12-06 18:54:16', NULL, NULL),
-(49, 'Charla Ciberseguridad', '2024-03-14', 'Universidad Nacional de Cordoba, Cordoba, Argentina', 'images/charlaCibersegruidad.jpg', 'El profesor de ciberseguridad Jose Pedro Rittondo nos explica como protegernos en este mundo virtual', '15:00:00', 150, '17:00:00', 1, NULL, '2023-12-06 18:55:56', NULL, NULL),
-(50, 'Como construir un CV', '2024-03-21', 'Municipalidad de Cordoba, Cordoba Capital, Argentina', 'images/empleo.png', 'La municipalidad de Cordoba organiza una charla de la mano de Susana Bongiovanni para construir un CV y salir al mercado', '17:00:00', 200, '19:00:00', 1, NULL, '2023-12-06 18:57:32', NULL, NULL);
+INSERT INTO `eventos` (`IDeventos`, `evento`, `fecha`, `lugar`, `imagen`, `descripcion`, `hora`, `limite_inscritos`, `hora_fin`, `activo`, `Costo`, `FechaAlta`, `IDcategoria`, `duracion`, `organizador`) VALUES
+(47, 'Semana TIC 2023 cba', '2023-12-10', 'Universidad Blas Sede Cordoba', 'images/semanatic.jpg', 'Disfruta del evento tecnologico del año de la mano de grandes oradores!', '09:00:00', 500, '21:00:00', 1, NULL, '2023-12-06 16:04:46', NULL, NULL, NULL),
+(48, 'Maraton San Agustin', '2023-12-10', 'Plaza 25 de Mayo, San Agustin, Cordoba', 'images/maraonSanAgustin.jpeg', 'El municipio de San Agusitn realiza una maraton!', '10:00:00', 200, '12:30:00', 1, NULL, '2023-12-06 18:54:16', NULL, NULL, NULL),
+(49, 'Charla Ciberseguridad', '2024-03-14', 'Universidad Nacional de Cordoba, Cordoba, Argentina', 'images/charlaCibersegruidad.jpg', 'El profesor de ciberseguridad Jose Pedro Rittondo nos explica como protegernos en este mundo virtual', '15:00:00', 150, '17:00:00', 1, NULL, '2023-12-06 18:55:56', NULL, NULL, NULL),
+(50, 'Como construir un CV', '2024-03-21', 'Municipalidad de Cordoba, Cordoba Capital, Argentina', 'images/empleo.png', 'La municipalidad de Cordoba organiza una charla de la mano de Susana Bongiovanni para construir un CV y salir al mercado', '17:00:00', 200, '19:00:00', 1, NULL, '2023-12-06 18:57:32', NULL, NULL, NULL),
+(51, 'Maratón Almafuerte', '2023-12-16', 'Ciudad de Almafuerte, Cordoba, Argentina', 'images/maratonAlmafuerte.jpg', 'Veni a disfrutar de esta increible maraton en la ciudad de Almafuerte!!', '10:00:00', 450, '12:30:00', 1, 7500, '2023-12-06 20:51:34', 1, '02:30:00', NULL),
+(52, 'Curso Manejo Teorico ', '2023-12-20', 'Guillermo Marconi 1320, Rio Tercero, Cordoba, Argentina', 'images/cursoManejo.png', 'La municipalidad de Rio Tercero organiza cursos de manejo teoricos para que puedas conseguir tu licencia de forma mas facil. Gestion Marcos Ferrer', '20:00:00', 80, '22:00:00', 0, 0, '2023-12-06 21:14:18', 2, '02:00:00', NULL),
+(53, 'Curso Manejo Teorico ', '2023-12-21', 'Guillermo Marconi 1320, Rio Tercero, Cordoba, Argentina', 'images/cursoManejo.png', 'La municipalidad de Rio Tercero organiza cursos de manejo teoricos para que puedas conseguir tu licencia de forma mas facil. Gestion Marcos Ferrer', '20:00:00', 75, '22:00:00', 0, 0, '2023-12-06 21:30:45', 2, '02:00:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -155,17 +159,18 @@ CREATE TABLE `usuarios` (
   `esAdmin` varchar(1) DEFAULT NULL,
   `apellido` varchar(255) NOT NULL,
   `celular` varchar(25) DEFAULT NULL,
-  `sexo` varchar(100) DEFAULT NULL
+  `sexo` varchar(100) DEFAULT NULL,
+  `fechaAlta` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`IDusuario`, `nombre`, `email`, `contrasena`, `esAdmin`, `apellido`, `celular`, `sexo`) VALUES
-(18, 'Juan', 'vazquez800juan@gmail.com', '12345678', 's', 'Vazquez', '3571603501', NULL),
-(19, 'fede', 'fededella@gmail.com', '12345678', NULL, 'dellavalle', '448988', NULL),
-(20, 'Pedro', 'pvaldez@gmail.com', 'pedro123', NULL, 'Valdez', '3571603501', NULL);
+INSERT INTO `usuarios` (`IDusuario`, `nombre`, `email`, `contrasena`, `esAdmin`, `apellido`, `celular`, `sexo`, `fechaAlta`) VALUES
+(18, 'Juan', 'vazquez800juan@gmail.com', '12345678', 's', 'Vazquez', '3571603501', NULL, '2023-12-06 19:09:17'),
+(19, 'fede', 'fededella@gmail.com', '12345678', NULL, 'dellavalle', '448988', NULL, '2023-12-06 19:09:17'),
+(20, 'Pedro', 'pvaldez@gmail.com', 'pedro123', NULL, 'Valdez', '3571603501', NULL, '2023-12-06 19:09:17');
 
 --
 -- Índices para tablas volcadas
@@ -226,7 +231,7 @@ ALTER TABLE `categoriaevento`
 -- AUTO_INCREMENT de la tabla `eventos`
 --
 ALTER TABLE `eventos`
-  MODIFY `IDeventos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `IDeventos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT de la tabla `inscripciones`
