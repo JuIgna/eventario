@@ -20,7 +20,10 @@ if (isset($_SESSION['error_message'])) {
 
 
 // Consulta para obtener la información del evento
-$queryEvento = "SELECT * FROM eventos WHERE IDeventos = $IDevento";
+$queryEvento = "SELECT e.*, c.nombrecategoria
+                FROM eventos e
+                INNER JOIN categoriaevento c ON e.IDcategoria = c.IDcategoria
+                WHERE e.IDeventos = $IDevento";
 $resultEvento = $connection->query($queryEvento);
 
 $queryPreinscritos = "SELECT u.IDusuario, u.nombre, u.apellido, u.email
@@ -87,39 +90,54 @@ $resultInscritos = $connection->query($queryInscritos);
                                 <div class="col-md-6">
                                     <!-- Información principal del evento -->
                                     <dl class="row">
+                                        <dt class="col-sm-4">Descripcion:</dt>
+                                        <dd class="col-sm-8">
+                                            <?= $evento['descripcion'] ?> 
+                                        </dd>
+
+                                        <dt class="col-sm-4">Categoria del Evento:</dt>
+                                        <dd class="col-sm-8">
+                                            <?= $evento['nombrecategoria'] ?> 
+                                        </dd>
+
                                         <dt class="col-sm-4">Fecha:</dt>
                                         <dd class="col-sm-8">
-                                            <?= $evento['fecha'] ?>
+                                            <?= $evento['fecha'] ?> 
                                         </dd>
 
                                         <dt class="col-sm-4">Hora:</dt>
                                         <dd class="col-sm-8">
-                                            <?= $evento['hora'] ?>
+                                            <?= $evento['hora'] ?> 
+                                        </dd>
+
+                                        <dt class="col-sm-4">Hora Finalizacion:</dt>
+                                        <dd class="col-sm-8">
+                                            <?= $evento['hora_fin'] ?> 
                                         </dd>
 
                                         <dt class="col-sm-4">Duración:</dt>
                                         <dd class="col-sm-8">
-                                            <?= $evento['duracion'] ?>
+                                            <?= $evento['duracion'] ?> 
                                         </dd>
 
                                         <dt class="col-sm-4">Lugar:</dt>
                                         <dd class="col-sm-8">
-                                            <?= $evento['lugar'] ?>
+                                            <?= $evento['lugar'] ?> 
                                         </dd>
 
-                                        <dt class="col-sm-4">Costo:</dt>
+                                        <dt class="col-sm-4">Costo en ARS:</dt>
                                         <dd class="col-sm-8">
-                                            <?= $evento['Costo'] ?>
+                                            <?= $evento['Costo'] ?> 
                                         </dd>
 
-                                        <dt class="col-sm-4">Limite de inscritos:</dt>
+                                        <dt class="col-sm-4">Limite de Inscripciones:</dt>
                                         <dd class="col-sm-8">
-                                            <?= $evento['limite_inscritos'] ?>
+                                            <?= $evento['limite_inscritos'] ?> 
                                         </dd>
 
                                         <dt class="col-sm-4">Organizador:</dt>
                                         <dd class="col-sm-8">
-                                            <?= $evento['organizador'] ?>
+                                            <?= $evento['organizador'] ?> 
                                         </dd>
 
                                         <!-- Estado del evento y botón para activar/desactivar -->
@@ -203,6 +221,7 @@ $resultInscritos = $connection->query($queryInscritos);
                         </div>
                     </div>
                 </div>
+
 
                 <!-- Lista de usuarios preinscritos -->
                 <?php if ($resultPreinscritos === false): ?>
@@ -308,9 +327,6 @@ $resultInscritos = $connection->query($queryInscritos);
 
 </div>
 </body>
-
-
-
 
 
 </html>
