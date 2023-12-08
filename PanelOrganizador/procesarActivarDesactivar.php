@@ -23,6 +23,8 @@ $queryActualizar = "UPDATE eventos SET activo = NOT activo WHERE IDeventos = '$I
 $resultActualizar = $connection->query($queryActualizar);
 
 if ($resultActualizar) {
+    header("Location: eventoDetalle.php?ID=$IDevento");
+    
     
 } else {
     die("Error al procesar la solicitud.");
