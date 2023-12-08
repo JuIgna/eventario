@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-12-2023 a las 15:54:23
+-- Tiempo de generación: 08-12-2023 a las 19:50:44
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -93,7 +93,6 @@ CREATE TABLE `eventos` (
 --
 
 INSERT INTO `eventos` (`IDeventos`, `evento`, `fecha`, `lugar`, `imagen`, `descripcion`, `hora`, `limite_inscritos`, `hora_fin`, `activo`, `Costo`, `FechaAlta`, `IDcategoria`, `duracion`, `organizador`) VALUES
-(49, 'Charla Ciberseguridad', '2024-03-14', 'Universidad Nacional de Cordoba, Cordoba, Argentina', 'images/charlaCibersegruidad.jpg', 'El profesor de ciberseguridad Jose Pedro Rittondo nos explica como protegernos en este mundo virtual', '15:00:00', 150, '17:00:00', 1, NULL, '2023-12-06 18:55:56', 2, NULL, NULL),
 (51, 'Maratón Almafuerte', '2023-12-16', 'Ciudad de Almafuerte, Cordoba, Argentina', 'images/maratonAlmafuerte.jpg', 'Veni a disfrutar de esta increible maraton en la ciudad de Almafuerte!!', '10:00:00', 450, '12:30:00', 0, 7500, '2023-12-06 20:51:34', 1, '02:30:00', NULL),
 (52, 'Curso Manejo Teorico ', '2023-12-20', 'Guillermo Marconi 1320, Rio Tercero, Cordoba, Argentina', 'images/cursoManejo.png', 'La municipalidad de Rio Tercero organiza cursos de manejo teoricos para que puedas conseguir tu licencia de forma mas facil. Gestion Marcos Ferrer', '20:00:00', 80, '22:00:00', 1, 0, '2023-12-06 21:14:18', 2, '02:00:00', NULL),
 (55, 'Curso sobre armado de bombas', '2023-12-30', 'Municipalidad de Rio Tercero', 'images/descarga.jpg', 'Rompete unas bombitas!', '10:00:00', 500, '15:00:00', 1, 18000, '2023-12-08 14:51:08', 2, '05:00:00', 'Municipalidad de Rio Tercero');
