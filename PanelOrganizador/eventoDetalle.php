@@ -17,6 +17,8 @@ if (isset($_SESSION['error_message'])) {
 }
 
 
+
+
 // Consulta para obtener la información del evento
 $queryEvento = "SELECT * FROM eventos WHERE IDeventos = $IDevento";
 $resultEvento = $connection->query($queryEvento);
@@ -122,11 +124,18 @@ $resultInscritos = $connection->query($queryInscritos);
 
                                         <!-- Estado del evento y botón para activar/desactivar -->
                                         <div class="row mt-3">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6 mb-2">
                                                 <!-- Botón para activar/desactivar con confirmación -->
-                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
                                                     data-target="#confirmacionModal">
-                                                    <?php echo ($evento['activo'] == 1) ? "Desactivar evento" : "Activar evento"; ?>
+                                                    <?php echo ($evento['activo'] == 1) ? "Desactivar " : "Activar "; ?>
+                                                </button>
+                                            </div>
+                                            <div class="col-md-6 mb-2">
+                                                <!-- Botón para eliminar evento con confirmación -->
+                                                <button type="button" class="btn btn-danger btn-block" data-toggle="modal"
+                                                    data-target="#eliminarEventoModal" <?php echo ($evento['activo'] == 1) ? "disabled" : ""; ?>>
+                                                    Eliminar Evento
                                                 </button>
                                             </div>
                                         </div>
@@ -172,6 +181,28 @@ $resultInscritos = $connection->query($queryInscritos);
                     <p>No se encontró información del evento.</p>
                 <?php endif; ?>
 
+                <!-- Modal de confirmación para eliminar evento -->
+                <div class="modal fade" id="eliminarEventoModal" tabindex="-1" role="dialog"
+                    aria-labelledby="eliminarEventoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="eliminarEventoModalLabel">Confirmación de eliminación</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                ¿Estás seguro de que deseas eliminar este evento? Esta acción no se puede deshacer.
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <a href="procesarEliminarEvento.php?IDevento=<?= $IDevento ?>"
+                                    class="btn btn-danger">Eliminar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Lista de usuarios preinscritos -->
                 <?php if ($resultPreinscritos === false): ?>
@@ -187,7 +218,7 @@ $resultInscritos = $connection->query($queryInscritos);
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>ID Usuario</th>
+
                                         <th>Nombre</th>
                                         <th>Apellido</th>
                                         <th>Email</th>
@@ -197,9 +228,7 @@ $resultInscritos = $connection->query($queryInscritos);
                                     <?php while ($preinscrito = $resultPreinscritos->fetch_assoc()): ?>
                                         <!-- Recuerda ajustar los nombres de las columnas según tu esquema de base de datos -->
                                         <tr>
-                                            <td>
-                                                <?= $preinscrito['IDusuario'] ?>
-                                            </td>
+
                                             <!-- Agrega aquí más detalles según tus campos -->
                                             <td>
                                                 <?= $preinscrito['nombre'] ?>
@@ -234,7 +263,7 @@ $resultInscritos = $connection->query($queryInscritos);
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>ID Usuario</th>
+
                                         <th>Nombre</th>
                                         <th>Apellido</th>
                                         <th>Email</th>
@@ -245,9 +274,7 @@ $resultInscritos = $connection->query($queryInscritos);
                                     <?php while ($inscrito = $resultInscritos->fetch_assoc()): ?>
                                         <!-- Recuerda ajustar los nombres de las columnas según tu esquema de base de datos -->
                                         <tr>
-                                            <td>
-                                                <?= $inscrito['IDusuario'] ?>
-                                            </td>
+
                                             <td>
                                                 <?= $inscrito['nombre'] ?>
                                             </td>
