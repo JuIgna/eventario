@@ -74,7 +74,7 @@ if (isset($_GET['IDeventos'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel Administracion</title>
     <link rel="stylesheet" type="text/css" href="css/estilosDetalleEvento.css">
-    <script src="scripts/detalleEvento.js"></script>
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.0/dist/sweetalert2.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
