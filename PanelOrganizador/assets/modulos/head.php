@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
-  <link rel="shortcut icon" href="assets/dist/img/AdminLTELogo.png" type="image/x-icon">
+  <link rel="shortcut icon" href="../logo.png" type="image/x-icon">
 
   
   <script src="assets/plugins/jquery/jquery.min.js"></script>

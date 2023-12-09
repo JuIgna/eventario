@@ -14,6 +14,29 @@ if (isset($_SESSION['success_message'])) {
   // Limpiar el mensaje de éxito después de mostrarlo
   unset($_SESSION['success_message']);
 }
+
+if (isset($_SESSION['categoriaExito'])) {
+  echo '<div id="successMessage" class="alert alert-success alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <h5><i class="icon fas fa-check"></i> Éxito</h5>
+          ' . $_SESSION['categoriaExito'] . '
+        </div>';
+
+  // Limpiar el mensaje de éxito después de mostrarlo
+  unset($_SESSION['categoriaExito']);
+}
+
+
+if (isset($_SESSION['categoriaFallo'])) {
+  echo '<div id="errorMessage" class="alert alert-danger alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <h5><i class="icon fas fa-ban"></i> Error</h5>
+          ' . $_SESSION['categoriaFallo'] . '
+        </div>';
+
+  // Limpiar el mensaje de error después de mostrarlo
+  unset($_SESSION['categoriaFallo']);
+}
 ?>
 
 
