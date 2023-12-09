@@ -2,7 +2,6 @@
 session_start();
 ?>
 
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -11,10 +10,9 @@ session_start();
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mis Eventos</title>
+  <link rel="stylesheet" type="text/css" href="css/listaEventos.css">
   <script src="scriptEventos.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="css/listaEventos.css" />
+  <script src="scriptAPI.js"></script>
   <link rel="shortcut icon" href="../logo.png" type="image/x-icon">
 </head>
 
@@ -23,8 +21,6 @@ session_start();
     <h1><a href="../index.html" class="logo-link">Eventario</a></h1>
 
     <?php
-     // session_start();
-
     if (isset($_SESSION['username'])) {
       $username = $_SESSION['username'];
       echo "<div class='button-container'>";
@@ -34,6 +30,10 @@ session_start();
     } else {
       echo "<button id='login-button' onclick='redirectToLogin()'>Iniciar sesión</button>";
     }
+    if (isset($_SESSION['Mensajedeexito'])) {
+      $username = $_SESSION['username'];
+      echo "<h1> EVENTO AGREGADO CON EXITO </h1>";
+    } 
     ?>
   </header>
 
@@ -43,31 +43,23 @@ session_start();
       <h3 class="title-proximos-eventos">Eventos en los que estás inscripto</h3>
       <button onclick="redirectToEventList()" id="add-event-button"> Lista Eventos </button>
 
-      
-
-
       <?php
       if (!isset($_SESSION['username'])) {
         echo "<p class='login-message'>Inicia sesión para ver tus eventos.</p>";
       } else {
-        // Configuración de la conexión a la base de datos
-        $host = "localhost"; // Cambiar si es necesario
-        $username = "eventario_juan"; // Cambiar por tu nombre de usuario de la base de datos
-        $password = "juan$2023"; // Cambiar por tu contraseña de la base de datos
-        $database = "eventario_db"; // Cambiar por el nombre de tu base de datos
+        $host = "localhost";
+        $username = "eventario_juan";
+        $password = "juan$2023";
+        $database = "eventario_db";
 
-        // Crear la conexión a la base de datos
         $connection = new mysqli($host, $username, $password, $database);
 
-        // Verificar si hay errores en la conexión
         if ($connection->connect_error) {
           die("Error en la conexión a la base de datos: " . $connection->connect_error);
         }
 
-        // Obtener el ID del usuario actual
         $userID = $_SESSION['IDusuario'];
 
-        // Consulta para obtener los eventos en los que está inscrito el usuario
         $query = "SELECT e.evento, e.fecha, e.lugar, e.imagen, e.descripcion, e.hora, e.hora_fin
                   FROM eventos e 
                   INNER JOIN inscripciones i ON e.IDeventos = i.IDeventos 
@@ -86,7 +78,6 @@ session_start();
             $hora = $row ["hora"];
             $hora_fin = $row ["hora_fin"];
 
-
             echo "<li>";
             echo "<div class='event-item'>";
             echo "<div class='event-image'>";
@@ -99,6 +90,15 @@ session_start();
             echo "<p>Lugar: $lugar</p>";
             echo "<p>Hora: $hora</p>";
             echo "<p>Hora Fin: $hora_fin</p>";
+            
+            // Botón "Añadir al calendario" con lógica PHP
+            echo "<form method='get' action='procesarEvento.php'>";
+            echo "<input type='hidden' name='nombre' value='$evento'>"; // Usar 'nombre' en lugar de 'evento'
+            echo "<input type='hidden' name='fecha' value='$fecha'>";
+            echo "<input type='hidden' name='hora' value='$hora'>";
+            echo "<input type='submit' value='Añadir al calendario'>";
+            echo "</form>";
+
             echo "</div>";
             echo "</div>";
             echo "</li>";
@@ -108,7 +108,6 @@ session_start();
           echo "<p class='no-events-message'>No estás inscrito en ningún evento.</p>";
         }
 
-        // Cerrar la conexión a la base de datos
         $connection->close();
       }
       ?>
@@ -116,6 +115,5 @@ session_start();
   </main>
 
 </body>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" 
-      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+
 </html>

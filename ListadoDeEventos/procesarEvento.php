@@ -1,10 +1,10 @@
 <?php
 // Cargar la biblioteca de cliente de Google API para PHP
-require_once 'D:\xampp\htdocs\eventario\ListadoDeEventos\script.js';
+require '../vendor/autoload.php';
 
 // Credenciales de la aplicación y configuración de la API de Google Calendar
 $client = new Google_Client();
-$client->setAuthConfig('path/to/client_secret.json');
+$client->setAuthConfig('../client_secret.json');
 $client->addScope(Google_Service_Calendar::CALENDAR);
 
 // Inicializar la sesión y obtener el token del usuario
@@ -17,10 +17,10 @@ if (isset($_SESSION['access_token'])) {
     $service = new Google_Service_Calendar($client);
 
     // Obtener los datos del evento del formulario en misEventos.php
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $nombreEvento = $_POST['nombre']; // Obtener el nombre del evento
-        $fechaEvento = $_POST['fecha']; // Obtener la fecha del evento
-        $horaEvento = $_POST['hora']; // Obtener la hora del evento
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        $nombreEvento = $_GET['nombre']; // Obtener el nombre del evento
+        $fechaEvento = $_GET['fecha']; // Obtener la fecha del evento
+        $horaEvento = $_GET['hora']; // Obtener la hora del evento
 
         // Construir la fecha y hora del evento
         $fechaHoraInicio = $fechaEvento . "T" . $horaEvento . ":00"; // Fecha y hora de inicio del evento
@@ -39,12 +39,19 @@ if (isset($_SESSION['access_token'])) {
             ],
         ]);
 
-        // Insertar el evento en el calendario del usuario
-        $calendarId = 'primary'; // ID del calendario del usuario
-        $event = $service->events->insert($calendarId, $event);
+        try {
+            // Insertar el evento en el calendario del usuario
+            $calendarId = 'primary'; // ID del calendario del usuario
+            $event = $service->events->insert($calendarId, $event);
 
-        // Manejar la respuesta del servidor después de insertar el evento
-        echo 'Evento agregado al calendario de Google.';
+            // Manejar la respuesta del servidor después de insertar el evento
+            $_SESSION['Mensajedeexito'] = "Evento agregado con éxito";
+            header("Location: misEventos.php");
+        } catch (Google\Service\Exception $e) {
+            echo "Error al insertar el evento: " . $e->getMessage();
+        } catch (Exception $e) {
+            echo "Error inesperado: " . $e->getMessage();
+        }
     } else {
         echo 'Error: Método de solicitud no válido.';
     }
