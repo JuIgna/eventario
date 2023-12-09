@@ -6,14 +6,17 @@ session_start();
 <html>
 
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Iniciar sesión - Eventario</title>
-  <link rel="stylesheet" type="text/css" href="css/styles.css">
+  <link rel="stylesheet" type="text/css" href="css/styles.css" />
   <script src="script.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="css/Index.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="css/Index.css" />
+  <link rel="shortcut icon" href="../logo.png" type="image/x-icon">
 
 </head>
 
@@ -46,11 +49,11 @@ session_start();
         <h2 class="text-center mb-4">Iniciar sesión</h2>
         <div class="form-floating mb-3">
           <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
-          <label for="email">Email:</label>
+          <label class="letras-iniciar-seccion" for="email">Email:</label>
         </div>
         <div class="form-floating mb-3">
           <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
-          <label for="password">Contraseña:</label>
+          <label class="letras-iniciar-seccion" for="password">Contraseña:</label>
         </div>
         <button class="w-100 btn btn-lg btn-primary" type="submit">Iniciar sesión</button>
         <a href="registro.php" class="mt-3 d-block text-center">Registrarse</a>
@@ -59,6 +62,9 @@ session_start();
     
   </main>
 
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" 
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 </body>
 
 </html>
