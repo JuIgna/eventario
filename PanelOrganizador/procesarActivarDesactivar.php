@@ -13,6 +13,7 @@ if ($resultVerificar && $resultVerificar->num_rows > 0) {
     if ($totalInscripciones > 0) {
         $_SESSION['error_message'] = "No se puede desactivar el evento porque ya posee preinscripciones o inscripciones.";
         header("Location: eventoDetalle.php?ID=$IDevento");
+        exit;
         // Mostrar mensaje de error si hay inscripciones activas
         
     }
