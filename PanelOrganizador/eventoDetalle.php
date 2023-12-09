@@ -16,7 +16,38 @@ if (isset($_SESSION['error_message'])) {
     unset($_SESSION['error_message']);
 }
 
+if (isset($_SESSION['errorEditarFecha'])) {
+    echo '<div id="errorMessage" class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h5><i class="icon fas fa-ban"></i> Error</h5>
+            ' . $_SESSION['errorEditarFecha'] . '
+          </div>';
 
+    // Limpiar el mensaje de error después de mostrarlo
+    unset($_SESSION['errorEditarFecha']);
+}
+
+if (isset($_SESSION['errorEditarImagen'])) {
+    echo '<div id="errorMessage" class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h5><i class="icon fas fa-ban"></i> Error</h5>
+            ' . $_SESSION['errorEditarImagen'] . '
+          </div>';
+
+    // Limpiar el mensaje de error después de mostrarlo
+    unset($_SESSION['errorEditarImagen']);
+}
+
+if (isset($_SESSION['editarEventoExito'])) {
+    echo '<div id="successMessage" class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h5><i class="icon fas fa-check"></i> Éxito</h5>
+            ' . $_SESSION['editarEventoExito'] . '
+          </div>';
+
+    // Limpiar el mensaje de éxito después de mostrarlo
+    unset($_SESSION['editarEventoExito']);
+}
 
 
 // Consulta para obtener la información del evento
@@ -92,52 +123,52 @@ $resultInscritos = $connection->query($queryInscritos);
                                     <dl class="row">
                                         <dt class="col-sm-4">Descripcion:</dt>
                                         <dd class="col-sm-8">
-                                            <?= $evento['descripcion'] ?> 
+                                            <?= $evento['descripcion'] ?>
                                         </dd>
 
                                         <dt class="col-sm-4">Categoria del Evento:</dt>
                                         <dd class="col-sm-8">
-                                            <?= $evento['nombrecategoria'] ?> 
+                                            <?= $evento['nombrecategoria'] ?>
                                         </dd>
 
                                         <dt class="col-sm-4">Fecha:</dt>
                                         <dd class="col-sm-8">
-                                            <?= $evento['fecha'] ?> 
+                                            <?= $evento['fecha'] ?>
                                         </dd>
 
                                         <dt class="col-sm-4">Hora:</dt>
                                         <dd class="col-sm-8">
-                                            <?= $evento['hora'] ?> 
+                                            <?= $evento['hora'] ?>
                                         </dd>
 
                                         <dt class="col-sm-4">Hora Finalizacion:</dt>
                                         <dd class="col-sm-8">
-                                            <?= $evento['hora_fin'] ?> 
+                                            <?= $evento['hora_fin'] ?>
                                         </dd>
 
                                         <dt class="col-sm-4">Duración:</dt>
                                         <dd class="col-sm-8">
-                                            <?= $evento['duracion'] ?> 
+                                            <?= $evento['duracion'] ?>
                                         </dd>
 
                                         <dt class="col-sm-4">Lugar:</dt>
                                         <dd class="col-sm-8">
-                                            <?= $evento['lugar'] ?> 
+                                            <?= $evento['lugar'] ?>
                                         </dd>
 
                                         <dt class="col-sm-4">Costo en ARS:</dt>
                                         <dd class="col-sm-8">
-                                            <?= $evento['Costo'] ?> 
+                                            <?= $evento['Costo'] ?>
                                         </dd>
 
                                         <dt class="col-sm-4">Limite de Inscripciones:</dt>
                                         <dd class="col-sm-8">
-                                            <?= $evento['limite_inscritos'] ?> 
+                                            <?= $evento['limite_inscritos'] ?>
                                         </dd>
 
                                         <dt class="col-sm-4">Organizador:</dt>
                                         <dd class="col-sm-8">
-                                            <?= $evento['organizador'] ?> 
+                                            <?= $evento['organizador'] ?>
                                         </dd>
 
                                         <!-- Estado del evento y botón para activar/desactivar -->
@@ -155,6 +186,14 @@ $resultInscritos = $connection->query($queryInscritos);
                                                     data-target="#eliminarEventoModal" <?php echo ($evento['activo'] == 1) ? "disabled" : ""; ?>>
                                                     Eliminar Evento
                                                 </button>
+                                            </div>
+
+                                            <div class="col-md-6 mb-2">
+                                                <button type="button" class="btn btn-warning btn-block" data-toggle="modal"
+                                                    data-target="#editarEventoModal">
+                                                    Editar Evento
+                                                </button>
+
                                             </div>
                                         </div>
 
@@ -222,6 +261,132 @@ $resultInscritos = $connection->query($queryInscritos);
                     </div>
                 </div>
 
+
+
+                <!-- Modal de edición de evento -->
+                <div class="modal fade" id="editarEventoModal" tabindex="-1" role="dialog"
+                    aria-labelledby="editarEventoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editarEventoModalLabel">Editar Evento</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Formulario de edición de evento -->
+                                <form action="procesarEditarEvento.php" method="post">
+                                    <input type="hidden" name="IDevento" value="<?= $evento['IDeventos'] ?>">
+
+                                    <!-- Agrega aquí los campos que desees editar -->
+                                    <div class="form-group">
+                                        <label for="nombreEvento">Nombre del Evento:</label>
+                                        <input type="text" class="form-control" id="nombreEvento" name="nombreEvento"
+                                            value="<?= $evento['evento'] ?>" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="descripcionEvento">Descripción del Evento:</label>
+                                        <textarea class="form-control" id="descripcionEvento" name="descripcionEvento"
+                                            required><?= $evento['descripcion'] ?></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="categoriaEvento">Categoría del Evento:</label>
+                                        <select class="form-control" id="categoriaEvento" name="categoriaEvento"
+                                            required>
+                                            <?php
+                                            // Consulta para obtener todas las categorías existentes
+                                            $queryCategorias = "SELECT * FROM categoriaevento";
+                                            $resultCategorias = $connection->query($queryCategorias);
+
+                                            if ($resultCategorias === false) {
+                                                echo "Error en la consulta de categorías: " . $connection->error;
+                                            } else {
+                                                while ($categoria = $resultCategorias->fetch_assoc()) {
+                                                    // Marcamos la categoría actual como seleccionada
+                                                    $selected = ($categoria['IDcategoria'] == $evento['IDcategoria']) ? 'selected' : '';
+
+                                                    echo "<option value='{$categoria['IDcategoria']}' $selected>{$categoria['nombrecategoria']}</option>";
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fechaEvento">Fecha del Evento:</label>
+                                        <input type="date" class="form-control" id="fechaEvento" name="fechaEvento"
+                                            value="<?= $evento['fecha'] ?>" required></input>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="horaEvento">Hora de inicio del Evento:</label>
+                                        <input type="time" class="form-control" id="horaEvento" name="horaEvento"
+                                            value="<?= $evento['hora'] ?>" required></input>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="horaFinEvento">Hora de finalizacion del Evento:</label>
+                                        <input type="time" class="form-control" id="horaFinEvento" name="horaFinEvento"
+                                            value="<?= $evento['hora_fin'] ?>" required></input>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="duracionEvento">Duracion del Evento:</label>
+                                        <input type="time" class="form-control" id="duracionEvento"
+                                            name="duracionEvento" value="<?= $evento['duracion'] ?>" required></input>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="lugarEvento">Lugar del Evento:</label>
+                                        <input type="text" class="form-control" id="lugarEvento" name="lugarEvento"
+                                            value="<?= $evento['lugar'] ?>" required></input>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="costoEvento">Costo en pesos del Evento:</label>
+                                        <input type="number" class="form-control" id="costoEvento" name="costoEvento"
+                                            value="<?= $evento['Costo'] ?>" required></input>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="limiteInscritosEvento">Limite de inscripciones del Evento:</label>
+                                        <input type="number" class="form-control" id="limiteInscritosEvento"
+                                            name="limiteInscritosEvento" value="<?= $evento['limite_inscritos'] ?>"
+                                            required></input>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="organizadorEvento">Organizador del Evento:</label>
+                                        <input type="text" class="form-control" id="organizadorEvento"
+                                            name="organizadorEvento" value="<?= $evento['organizador'] ?>"
+                                            required></input>
+                                    </div>
+                                    
+                                    <!--
+                                    <div class="form-group">
+                                        <label for="imagenEvento">Imagen del Evento:</label>
+                                        <input type="file" class="form-control-file" id="imagenEvento"
+                                            name="imagenEvento" accept="image/*">
+                                        <?php // if ($evento['imagen']): ?>
+                                            <img src="<?//= $evento['imagen'] ?>" class="img-thumbnail mt-2"
+                                                alt="Imagen actual del evento">
+                                        <?php //endif; ?>
+                                    </div>
+                                    -->
+                                    <!-- Agrega más campos según la estructura de tu tabla -->
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Lista de usuarios preinscritos -->
                 <?php if ($resultPreinscritos === false): ?>
