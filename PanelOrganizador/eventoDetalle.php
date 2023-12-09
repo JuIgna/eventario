@@ -66,7 +66,7 @@ WHERE i.activo = 0";
 $resultPreinscritos = $connection->query($queryPreinscritos);
 
 // Consulta para obtener la lista de usuarios inscritos en el evento
-$queryInscritos = "SELECT u.IDusuario, u.nombre, u.apellido, u.email, u.celular, i.asistio, i.pago
+$queryInscritos = "SELECT u.IDusuario, u.nombre, u.apellido, u.email, u.celular, i.asistio, i.pago, i.activo
     FROM usuarios u
     INNER JOIN inscripciones i ON u.IDusuario = i.IDusuario
     AND i.IDeventos = '$IDevento'
@@ -431,8 +431,15 @@ $resultInscritos = $connection->query($queryInscritos);
                                                     data-target="#confirmacionModal<?= $preinscrito['IDusuario'] ?>">
                                                     Aceptar Inscripción
                                                 </button>
+
+                                                <a href="procesarEliminarInscripcion.php?IDusuario=<?= $preinscrito['IDusuario'] ?>&IDevento=<?= $IDevento ?>"
+                                                    class="btn btn-danger" data-toggle="modal"
+                                                    data-target="#eliminarInscripcionModal<?= $preinscrito['IDusuario'] ?>">
+                                                    <i class="fas fa-trash"></i> 
+                                                </a>
                                             </td>
                                         </tr>
+
                                         <!-- Modal de confirmación para cada usuario preinscrito -->
                                         <div class="modal fade" id="confirmacionModal<?= $preinscrito['IDusuario'] ?>"
                                             tabindex="-1" role="dialog"
@@ -460,6 +467,38 @@ $resultInscritos = $connection->query($queryInscritos);
                                                         <!-- Enlace a procesarAceptarInscripcion.php con parámetros -->
                                                         <a href="procesarAceptarInscripcion.php?IDusuario=<?= $preinscrito['IDusuario'] ?>&IDevento=<?= $IDevento ?>"
                                                             class="btn btn-primary">Aceptar Inscripción</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal de confirmación para eliminar la inscripción -->
+                                        <div class="modal fade" id="eliminarInscripcionModal<?= $preinscrito['IDusuario'] ?>"
+                                            tabindex="-1" role="dialog"
+                                            aria-labelledby="eliminarInscripcionModalLabel<?= $preinscrito['IDusuario'] ?>"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title"
+                                                            id="eliminarInscripcionModalLabel<?= $preinscrito['IDusuario'] ?>">
+                                                            Confirmación de Eliminación</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        ¿Estás seguro de que deseas eliminar la inscripción de
+                                                        <?= $preinscrito['nombre'] ?>
+                                                        <?= $preinscrito['apellido'] ?>?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Cancelar</button>
+                                                        <!-- Enlace a procesarEliminarInscripcion.php con parámetros -->
+                                                        <a href="procesarEliminarInscripcion.php?IDusuario=<?= $preinscrito['IDusuario'] ?>&IDevento=<?= $IDevento ?>"
+                                                            class="btn btn-danger">Eliminar Inscripción</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -511,144 +550,48 @@ $resultInscritos = $connection->query($queryInscritos);
                                             </td>
                                             <td>
                                                 <?= $inscrito['celular'] ?>
+
                                             </td>
 
-                                            <td>
-                                                <?= $inscrito['nombre'] ?>
-                                                <?= $inscrito['apellido'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $inscrito['email'] ?>
-                                            </td>
-                                            <td>
-                                                <?= $inscrito['celular'] ?>
-                                            </td>
+
                                             <td>
                                                 <?php if ($inscrito['asistio'] == 0): ?>
-                                                    <!-- Botones para las acciones si el campo asistencia es 0 -->
-                                                    <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                        data-target="#anularInscripcionModal<?= $inscrito['IDusuario'] ?>">
-                                                        Anular Inscripción
-                                                    </button>
-                                                    <button type="button" class="btn btn-warning" data-toggle="modal"
-                                                        data-target="#confirmarPagoModal<?= $inscrito['IDusuario'] ?>">
-                                                        Confirmar Pago
-                                                    </button>
-                                                    <button type="button" class="btn btn-success" data-toggle="modal"
-                                                        data-target="#confirmarAsistenciaModal<?= $inscrito['IDusuario'] ?>">
-                                                        Confirmar Asistencia
-                                                    </button>
-                                                <?php elseif ($inscrito['asistio'] == 1): ?>
-                                                    <!-- Botones para las acciones si el campo asistencia es 1 -->
-                                                    <button type="button" class="btn btn-secondary" data-toggle="modal"
-                                                        data-target="#anularPagoModal<?= $inscrito['IDusuario'] ?>">
-                                                        Anular Pago
-                                                    </button>
-                                                    <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                        data-target="#anularAsistenciaModal<?= $inscrito['IDusuario'] ?>">
-                                                        Anular Asistencia
-                                                    </button>
+                                                    <a class="btn btn-success"
+                                                        href="procesarAceptarAsistencia.php?IDusuario=<?= $inscrito['IDusuario'] ?>&IDevento=<?= $IDevento ?>">
+                                                        Aceptar Asistencia
+                                                    </a>
+                                                <?php else: ?>
+                                                    <a class="btn btn-danger"
+                                                        href="procesarAnularAsistencia.php?IDusuario=<?= $inscrito['IDusuario'] ?>&IDevento=<?= $IDevento ?>">
+                                                        Cancelar Asistencia
+                                                    </a>
+                                                <?php endif; ?>
+
+                                                <?php if ($inscrito['pago'] == 0): ?>
+                                                    <a class="btn btn-success"
+                                                        href="procesarAceptarPago.php?IDusuario=<?= $inscrito['IDusuario'] ?>&IDevento=<?= $IDevento ?>">
+                                                        Aceptar Pago
+                                                    </a>
+                                                <?php else: ?>
+                                                    <a class="btn btn-danger"
+                                                        href="procesarAnularPago.php?IDusuario=<?= $inscrito['IDusuario'] ?>&IDevento=<?= $IDevento ?>">
+                                                        Cancelar Pago
+                                                    </a>
+                                                <?php endif; ?>
+
+                                                <?php if ($inscrito['activo'] == 1): ?>
+                                                    <a class="btn btn-danger"
+                                                        href="procesarAnularInscripcion.php?IDusuario=<?= $inscrito['IDusuario'] ?>&IDevento=<?= $IDevento ?>">
+                                                        Cancelar Inscripcion
+                                                    </a>
                                                 <?php endif; ?>
                                             </td>
 
                                         </tr>
 
-                                        <!-- Modales para cada acción -->
-                                        <div class="modal fade" id="anularInscripcionModal<?= $inscrito['IDusuario'] ?>"
-                                            tabindex="-1" role="dialog"
-                                            aria-labelledby="anularInscripcionModalLabel<?= $inscrito['IDusuario'] ?>"
-                                            aria-hidden="true">
-                                            <!-- Contenido del modal para anular inscripción -->
-                                            <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title"
-                                                            id="anularInscripcionModalLabel<?= $inscrito['IDusuario'] ?>">
-                                                            Confirmación</h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        ¿Estás seguro de que deseas anular la inscripción de
-                                                        <?= $inscrito['nombre'] ?>
-                                                        <?= $inscrito['apellido'] ?>?
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">Cancelar</button>
-                                                        <!-- Enlace a procesarAceptarInscripcion.php con parámetros -->
-                                                        <a href="procesarAceptarInscripcion.php?IDusuario=<?= $inscrito['IDusuario'] ?>&IDevento=<?= $IDevento ?>"
-                                                            class="btn btn-primary">Aceptar Inscripción</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <!-- Modales para cada acción de anular -->
 
-                                        <div class="modal fade" id="anularAsistenciaModal<?= $inscrito['IDusuario'] ?>"
-                                            tabindex="-1" role="dialog"
-                                            aria-labelledby="anularAsistenciaModalLabel<?= $inscrito['IDusuario'] ?>"
-                                            aria-hidden="true">
-                                            <!-- Contenido del modal para anular inscripción -->
-                                            <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title"
-                                                            id="anularAsistenciaModal<?= $inscrito['IDusuario'] ?>">
-                                                            Confirmación</h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        ¿Estas seguro que deseas anular la asistencia de
-                                                        <?= $inscrito['nombre'] ?>
-                                                        <?= $inscrito['apellido'] ?>?
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">Cancelar</button>
-                                                        <!-- Enlace a procesarAceptarInscripcion.php con parámetros -->
-                                                        <a href="procesarAceptarInscripcion.php?IDusuario=<?= $inscrito['IDusuario'] ?>&IDevento=<?= $IDevento ?>"
-                                                            class="btn btn-primary">Aceptar </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
 
-                                        <div class="modal fade" id="anularPagoModal<?= $inscrito['IDusuario'] ?>"
-                                            tabindex="-1" role="dialog"
-                                            aria-labelledby="anularPagoModalLabel<?= $inscrito['IDusuario'] ?>"
-                                            aria-hidden="true">
-                                            <!-- Contenido del modal para anular inscripción -->
-                                            <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title"
-                                                            id="anularPagoModal<?= $inscrito['IDusuario'] ?>">
-                                                            Confirmación</h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        ¿Estas seguro que deseas anular el pago de 
-                                                        <?= $inscrito['nombre'] ?>
-                                                        <?= $inscrito['apellido'] ?>?
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">Cancelar</button>
-                                                        <!-- Enlace a procesarAceptarInscripcion.php con parámetros -->
-                                                        <a href="procesarAceptarInscripcion.php?IDusuario=<?= $inscrito['IDusuario'] ?>&IDevento=<?= $IDevento ?>"
-                                                            class="btn btn-primary">Aceptar </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
 
                                     <?php endwhile; ?>
                                 </tbody>
