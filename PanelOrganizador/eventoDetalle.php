@@ -49,6 +49,17 @@ if (isset($_SESSION['editarEventoExito'])) {
     unset($_SESSION['editarEventoExito']);
 }
 
+if (isset($_SESSION['preinscripcionesExito'])) {
+    echo '<div id="successMessage" class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h5><i class="icon fas fa-check"></i> Éxito</h5>
+            ' . $_SESSION['preinscripcionesExito'] . '
+          </div>';
+
+    // Limpiar el mensaje de éxito después de mostrarlo
+    unset($_SESSION['preinscripcionesExito']);
+}
+
 
 // Consulta para obtener la información del evento
 $queryEvento = "SELECT e.*, c.nombrecategoria
@@ -394,9 +405,12 @@ $resultInscritos = $connection->query($queryInscritos);
                         <?= $connection->error ?>
                     </p>
                 <?php elseif ($resultPreinscritos->num_rows > 0): ?>
+
+
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Usuarios Preinscritos</h3>
+                            <h3 class="card-title">Usuarios Preinscriptos al Evento</h3>
+
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered">
@@ -435,7 +449,7 @@ $resultInscritos = $connection->query($queryInscritos);
                                                 <a href="procesarEliminarInscripcion.php?IDusuario=<?= $preinscrito['IDusuario'] ?>&IDevento=<?= $IDevento ?>"
                                                     class="btn btn-danger" data-toggle="modal"
                                                     data-target="#eliminarInscripcionModal<?= $preinscrito['IDusuario'] ?>">
-                                                    <i class="fas fa-trash"></i> 
+                                                    <i class="fas fa-trash"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -509,6 +523,34 @@ $resultInscritos = $connection->query($queryInscritos);
                             </table>
                         </div>
                     </div>
+                    <!-- Botón "Aceptar todas las preinscripciones" y su modal de confirmación -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#aceptarTodasModal">
+                        Aceptar todas las preinscripciones
+                    </button>
+
+                    <!-- Modal de confirmación para aceptar todas las preinscripciones -->
+                    <div class="modal fade" id="aceptarTodasModal" tabindex="-1" role="dialog"
+                        aria-labelledby="aceptarTodasModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="aceptarTodasModalLabel">Confirmación</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    ¿Estás seguro de que deseas aceptar todas las preinscripciones para este evento?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    <!-- Enlace a procesarTodasPreinscripciones.php con parámetros -->
+                                    <a href="procesarTodasPreinscripciones.php?IDevento=<?= $IDevento ?>"
+                                        class="btn btn-primary">Aceptar Todas</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 <?php else: ?>
                     <p>No hay usuarios preinscritos.</p>
                 <?php endif; ?>
@@ -523,7 +565,7 @@ $resultInscritos = $connection->query($queryInscritos);
                 <?php elseif ($resultInscritos->num_rows > 0): ?>
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Usuarios Inscritos</h3>
+                            <h3 class="card-title">Usuarios Inscriptos al Evento</h3>
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered">
