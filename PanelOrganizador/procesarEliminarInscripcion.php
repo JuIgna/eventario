@@ -1,11 +1,12 @@
 <?php
 include "panelAdminLogica.php";
 
-if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["IDusuario"])) {
+if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["IDusuario"]) && isset($_GET["IDevento"])) {
     $IDusuario = $_GET["IDusuario"];
-    $IDevento = $_GET['IDevento'];
-    // Actualizar el campo 'pago' a 1 para confirmar el pago
-    $query = "UPDATE inscripciones SET pago = 1 WHERE IDusuario = $IDusuario AND IDeventos = $IDevento";
+    $IDevento = $_GET["IDevento"];
+
+    // Realizar la eliminación de la inscripción
+    $query = "DELETE FROM inscripciones WHERE IDusuario = $IDusuario AND IDeventos = $IDevento";
 
     if ($connection->query($query) === TRUE) {
         // Redirigir a la página de detalles del evento
