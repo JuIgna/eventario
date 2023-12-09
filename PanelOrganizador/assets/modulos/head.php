@@ -24,6 +24,8 @@
   <script src="assets/dist/js/adminlte.min.js"></script>
 
   <script src="assets/modulos/scriptsAdmin.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
 </head>
 
